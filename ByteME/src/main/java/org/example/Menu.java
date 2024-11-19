@@ -30,6 +30,7 @@ public class Menu {
             items.get(category).add(item);
         }
         else System.out.println("This item already exists in the menu.");
+        MenuSerializer.saveToFile(item);
     }
     public boolean removeItem(String name){
         boolean itemFound = false;
