@@ -1,10 +1,15 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class GuiApp {
     public static void viewGUI() {
@@ -32,12 +37,8 @@ public class GuiApp {
         menuLabel.setBackground(headerColor);
         menuLabel.setForeground(Color.WHITE);
 
-        String[] menuColumns = {"Item Name", "Price", "Availability"};
-        String[][] menuData = {
-                {"Pizza", "$8", "Available"},
-                {"Burger", "$5", "Out of Stock"},
-                {"Pasta", "$6", "Available"}
-        };
+        String[] menuColumns = {"Item Name", "Price", "Availability", "Category", "Rating"};
+        String[][] menuData = loadMenuDataFromJson();
         JTable menuTable = new JTable(new DefaultTableModel(menuData, menuColumns));
         menuTable.setBackground(tableBackground);
         menuTable.setForeground(tableForeground);
@@ -152,5 +153,35 @@ public class GuiApp {
         // Add main panel to the frame
         frame.add(mainPanel);
         frame.setVisible(true);
+    }
+
+    private static String[][] loadMenuDataFromJson() {
+        String[][] menuData = {};
+        try {
+            FileReader reader = new FileReader("ByteME/data/menu.json");
+            StringBuilder stringBuilder = new StringBuilder();
+            int i;
+            while ((i = reader.read()) != -1) {
+                stringBuilder.append((char) i);
+            }
+            reader.close();
+
+            // Parse the JSON data
+            JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+            menuData = new String[jsonArray.length()][5]; // 3 columns: Name, Price, Availability
+
+            // Populate the menu data array
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject item = jsonArray.getJSONObject(j);
+                menuData[j][0] = item.getString("name");
+                menuData[j][1] = "₹" + item.getDouble("price"); // Assuming price is stored as a number
+                menuData[j][2] = item.getBoolean("available") ? "Available" : "Out of Stock";
+                menuData[j][3] = item.getString("category");
+                menuData[j][4] = String.valueOf(item.getFloat("rating"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return menuData;
     }
 }

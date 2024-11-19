@@ -3,108 +3,126 @@
         "price": 40,
         "name": "Chowmein",
         "available": true,
+        "rating": 0,
         "category": "Chinese"
     },
     {
         "price": 50,
         "name": "Egg Chowmein",
         "available": true,
+        "rating": 0,
         "category": "Chinese"
     },
     {
         "price": 70,
         "name": "Chicken Chowmein",
         "available": true,
+        "rating": 0,
         "category": "Chinese"
     },
     {
         "price": 40,
         "name": "Veg Roll",
         "available": true,
+        "rating": 0,
         "category": "Chinese"
     },
     {
         "price": 50,
         "name": "Egg Roll",
         "available": true,
+        "rating": 0,
         "category": "Chinese"
     },
     {
         "price": 70,
         "name": "Chicken Roll",
         "available": true,
+        "rating": 0,
         "category": "Chinese"
     },
     {
         "price": 30,
         "name": "Alu Parantha",
         "available": true,
+        "rating": 0,
         "category": "North Indian"
     },
     {
         "price": 30,
         "name": "Alu Pyaz Parantha",
         "available": true,
+        "rating": 0,
         "category": "North Indian"
     },
     {
         "price": 40,
         "name": "Paneer Parantha",
         "available": true,
+        "rating": 0,
         "category": "North Indian"
     },
     {
         "price": 40,
         "name": "Mix Parantha",
         "available": true,
+        "rating": 0,
         "category": "North Indian"
     },
     {
         "price": 40,
         "name": "French Fries",
         "available": true,
+        "rating": 0,
         "category": "Snacks"
     },
     {
         "price": 25,
         "name": "Plain Maggi",
         "available": true,
+        "rating": 0,
         "category": "Snacks"
     },
     {
         "price": 35,
         "name": "Butter Maggi",
         "available": true,
+        "rating": 0,
         "category": "Snacks"
     },
     {
         "price": 40,
         "name": "Veg Maggi",
         "available": true,
+        "rating": 0,
         "category": "Snacks"
     },
     {
         "price": 50,
         "name": "Egg Maggi",
         "available": true,
+        "rating": 0,
         "category": "Snacks"
     },
     {
         "price": 20,
         "name": "Sting",
         "available": true,
+        "rating": 0,
         "category": "Beverage"
     },
     {
         "price": 20,
         "name": "Cold Coffee",
         "available": true,
+        "rating": 0,
         "category": "Beverage"
     },
     {
         "price": 20,
         "name": "Hot Coffee",
         "available": true,
+        "rating": 0,
         "category": "Beverage"
     }
 ]

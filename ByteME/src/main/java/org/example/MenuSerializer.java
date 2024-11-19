@@ -19,6 +19,7 @@ public class MenuSerializer {
         jsonItem.put("price", item.getPrice());
         jsonItem.put("category", item.getCategory());
         jsonItem.put("available", item.isAvailable());
+        jsonItem.put("rating", item.getRating());
 
         return jsonItem.toString();
     }
