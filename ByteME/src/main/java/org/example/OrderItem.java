@@ -1,4 +1,4 @@
-package org.example;
+package ByteME.src.main.java.org.example;
 
 public class OrderItem {
     private FoodItem item;

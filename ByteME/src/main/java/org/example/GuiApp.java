@@ -1,4 +1,4 @@
-package org.example;
+package ByteME.src.main.java.org.example;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
