@@ -1,9 +1,12 @@
-package ByteME.src.main.java.org.example;
+package org.example;
 
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ByteMe {
     private static final Scanner scanner = new Scanner(System.in);

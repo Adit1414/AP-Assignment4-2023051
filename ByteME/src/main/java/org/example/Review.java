@@ -1,4 +1,4 @@
-package ByteME.src.main.java.org.example;
+package org.example;
 
 public class Review {
     private final int rating;
