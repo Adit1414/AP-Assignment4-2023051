@@ -82,4 +82,12 @@ public class Order {
                 "\nAddress: " + address +
                 "\n";
     }
+
+    public String getSpecialRequest() {
+        return specialRequest;
+    }
+
+    public String getAddress() {
+        return address;
+    }
 }

@@ -8,29 +8,30 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-public class MenuSerializer {
+public class PendingOrderSerializer {
 
-    private static String add(FoodItem item) {
-        if (item == null) {
+    private static String add(Order order) {
+        if (order == null) {
             throw new IllegalArgumentException("Item cannot be null");
         }
         JSONObject jsonItem = new JSONObject();
-        jsonItem.put("name", item.getName());
-        jsonItem.put("price", item.getPrice());
-        jsonItem.put("category", item.getCategory());
-        jsonItem.put("available", item.isAvailable());
-        jsonItem.put("rating", item.getRating());
+        jsonItem.put("orderId", order.getOrderId());
+        jsonItem.put("order items", order.getOrderItemList());
+        jsonItem.put("status", order.getStatus());
+        jsonItem.put("special request", order.getSpecialRequest());
+        jsonItem.put("total", order.getTotalPrice());
+        jsonItem.put("address", order.getAddress());
 
         return jsonItem.toString();
     }
 
-    public static void saveToFile(FoodItem item) {
-        String json = add(item);
+    public static void saveToFile(Order order) {
+        String json = add(order);
         try {
             // Read the existing content from the file (if it exists)
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/menu.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/menu.json")));
+            if (Files.exists(Paths.get("ByteME/data/pendingOrders.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/pendingOrders.json")));
             }
 
             // Parse the existing content as a JSONArray, or create a new one if empty
@@ -41,7 +42,7 @@ public class MenuSerializer {
             jsonArray.put(jsonItem);
 
             // Write the updated array back to the file
-            Files.write(Paths.get("ByteME/data/menu.json"), jsonArray.toString(4).getBytes(),
+            Files.write(Paths.get("ByteME/data/pendingOrders.json"), jsonArray.toString(4).getBytes(),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         } catch (IOException e) {

@@ -69,11 +69,9 @@ public class GuiApp {
         pendingOrdersLabel.setBackground(headerColor);
         pendingOrdersLabel.setForeground(Color.WHITE);
 
-        String[] pendingOrdersColumns = {"Order ID", "Items", "Status"};
-        String[][] pendingOrdersData = {
-                {"1001", "Pizza x1", "Preparing"},
-                {"1002", "Pasta x2", "Out for Delivery"}
-        };
+        String[] pendingOrdersColumns = {"Order ID", "Items", "Total", "Special Request", "Address", "Status"};
+        String[][] pendingOrdersData = loadPendingOrderDataFromJson();
+
         JTable pendingOrdersTable = new JTable(new DefaultTableModel(pendingOrdersData, pendingOrdersColumns));
         pendingOrdersTable.setBackground(tableBackground);
         pendingOrdersTable.setForeground(tableForeground);
@@ -183,5 +181,56 @@ public class GuiApp {
             e.printStackTrace();
         }
         return menuData;
+    }
+
+    private static String[][] loadPendingOrderDataFromJson() {
+        String[][] menuData = {};
+        try {
+            FileReader reader = new FileReader("ByteME/data/pendingOrders.json");
+            StringBuilder stringBuilder = new StringBuilder();
+            int i;
+            while ((i = reader.read()) != -1) {
+                stringBuilder.append((char) i);
+            }
+            reader.close();
+
+            // Parse the JSON data
+            JSONArray jsonArray = new JSONArray(stringBuilder.toString());
+            menuData = new String[jsonArray.length()][6]; // 3 columns: Name, Price, Availability
+
+            // Populate the menu data array
+            for (int j = 0; j < jsonArray.length(); j++) {
+                JSONObject order = jsonArray.getJSONObject(j);
+
+                // Format the "order items" as a string (could be order name and quantity)
+                menuData[j][0] = order.getString("orderId");
+                menuData[j][1] = extractOrderItems(order.getJSONArray("order items")); // Order Items Summary
+                menuData[j][2] = "₹" + order.getDouble("total");
+                menuData[j][3] = order.getString("special request");
+                menuData[j][4] = order.getString("address");
+                menuData[j][5] = order.getString("status");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return menuData;
+    }
+
+    private static String extractOrderItems(JSONArray orderItemsArray) {
+        StringBuilder itemsSummary = new StringBuilder();
+        for (int i = 0; i < orderItemsArray.length(); i++) {
+            JSONObject orderItem = orderItemsArray.getJSONObject(i);
+            JSONObject item = orderItem.getJSONObject("item");
+
+            String itemName = item.getString("name");
+            int quantity = orderItem.getInt("quantity");
+
+            // Add item name and quantity to summary
+            itemsSummary.append(itemName).append(" x").append(quantity);
+            if (i < orderItemsArray.length() - 1) {
+                itemsSummary.append(", "); // Separate items with a comma
+            }
+        }
+        return itemsSummary.toString();
     }
 }
