@@ -98,7 +98,8 @@ public class ByteMe {
             switch (choice) {
                 //View all items
                 case "1a":
-                    customer.viewAllItems();
+//                    customer.viewAllItems();
+                    GuiApp.viewGUI(); // Prototype
                     break;
                 //Search for an item
                 case "1b":
@@ -200,7 +201,8 @@ public class ByteMe {
             String choice = scanner.nextLine().toLowerCase(Locale.ROOT);
             switch (choice) {
                 case "1a":
-                    admin.viewAllItems();
+//                    admin.viewAllItems();
+                    GuiApp.viewGUI();
                     break;
                 case "1b":
                     admin.addItem();
