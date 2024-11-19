@@ -43,7 +43,6 @@ public class MenuSerializer {
             Files.write(Paths.get("ByteME/data/menu.json"), jsonArray.toString(4).getBytes(),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-            System.out.println("Menu data saved successfully to " + "ByteME/data/menu.json");
         } catch (IOException e) {
             System.out.println("Error writing to JSON file: " + e.getMessage());
         }

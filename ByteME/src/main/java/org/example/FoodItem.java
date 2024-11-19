@@ -3,8 +3,6 @@ package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class FoodItem {
     private final String name;
     private int price;

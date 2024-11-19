@@ -1,5 +1,12 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class Menu {
@@ -29,32 +36,108 @@ public class Menu {
         if(!items.get(category).contains(item)){
             items.get(category).add(item);
         }
-        else System.out.println("This item already exists in the menu.");
-        MenuSerializer.saveToFile(item);
+
+        // Check if the item already exists in the menu by reading the existing JSON file
+        if (itemExistsInFile(item)) {
+            System.out.println("This item already exists in the menu.");
+        } else {
+            // Save the item to the file
+            MenuSerializer.saveToFile(item);
+            System.out.println("Item added to the menu.");
+        }
     }
-    public boolean removeItem(String name){
-        boolean itemFound = false;
-        for(List<FoodItem> foodList : this.items.values()){
-            for (int i = 0; i < foodList.size(); i++){
-                FoodItem food = foodList.get(i);
-                if (food.getName().equalsIgnoreCase(name)){
-                    foodList.remove(i);
-                    itemFound=true;
+
+    private boolean itemExistsInFile(FoodItem item) {
+        try {
+            // Read the existing content from the file
+            String existingContent = "";
+            if (Files.exists(Paths.get("ByteME/data/menu.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/menu.json")));
+            }
+
+            // Parse the existing content as a JSONArray
+            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+            // Check if the item already exists in the JSON array
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject existingItem = jsonArray.getJSONObject(i);
+
+                // Compare the item's name and category (you can extend this comparison to other attributes if needed)
+                if (existingItem.getString("name").equals(item.getName()) &&
+                        existingItem.getString("category").equals(item.getCategory())) {
+                    return true; // Item already exists
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the JSON file: " + e.getMessage());
+        }
+        return false; // Item does not exist
+    }
+
+
+//    public boolean removeItem(String name){
+//        boolean itemFound = false;
+//        for(List<FoodItem> foodList : this.items.values()){
+//            for (int i = 0; i < foodList.size(); i++){
+//                FoodItem food = foodList.get(i);
+//                if (food.getName().equalsIgnoreCase(name)){
+//                    foodList.remove(i);
+//                    itemFound=true;
+//                    break;
+//                }
+//            }
+//            if (itemFound) {
+//                break;  // Stop searching once the item has been found and updated
+//            }
+//        }
+//        if (!itemFound) {
+//            System.out.println(name + " not found in the menu.");
+//        }
+//        else {
+//            System.out.println(name + " was removed.");
+//        }
+//        return itemFound;
+//    }
+
+    public boolean removeItem(String name) {
+        try {
+            // Read the existing content from the file
+            String existingContent = "";
+            if (Files.exists(Paths.get("ByteME/data/menu.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/menu.json")));
+            }
+
+            // Parse the existing content as a JSONArray
+            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+            // Iterate through the JSONArray and find the item to remove
+            boolean itemFound = false;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject existingItem = jsonArray.getJSONObject(i);
+                if (existingItem.getString("name").equalsIgnoreCase(name)) {
+                    // Item found, remove it from the JSONArray
+                    jsonArray.remove(i);
+                    itemFound = true;
                     break;
                 }
             }
+
             if (itemFound) {
-                break;  // Stop searching once the item has been found and updated
+                // Write the updated JSON array back to the file
+                Files.write(Paths.get("ByteME/data/menu.json"), jsonArray.toString(4).getBytes(),
+                        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                System.out.println(name + " was removed.");
+            } else {
+                System.out.println(name + " not found in the menu.");
             }
+
+            return itemFound;
+        } catch (IOException e) {
+            System.out.println("Error reading or writing to JSON file: " + e.getMessage());
+            return false;
         }
-        if (!itemFound) {
-            System.out.println(name + " not found in the menu.");
-        }
-        else {
-            System.out.println(name + " was removed.");
-        }
-        return itemFound;
     }
+
 
     public FoodItem searchItem(String name){
         for(List<FoodItem> foodList : this.items.values()){
