@@ -1,5 +1,12 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class OrderManager {
@@ -56,6 +63,40 @@ public class OrderManager {
             if (order.getOrderId().equalsIgnoreCase(orderId)) {
                 order.setStatus(status);
                 System.out.println("Order status updated to: " + status);
+                try {
+                    // Read the existing content from the file
+                    String existingContent = "";
+                    if (Files.exists(Paths.get("ByteME/data/pendingOrders.json"))) {
+                        existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/pendingOrders.json")));
+                    }
+
+                    // Parse the existing content as a JSONArray
+                    JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+                    // Iterate through the JSONArray and find the order to update
+                    boolean itemFound = false;
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        JSONObject existingItem = jsonArray.getJSONObject(i);
+                        if (existingItem.getString("orderId").equalsIgnoreCase(orderId)) {
+                            // Order found, update its status
+                            existingItem.put("status", status); // Use `put` to update the value
+                            itemFound = true;
+                            break;
+                        }
+                    }
+
+                    if (itemFound) {
+                        // Write the updated JSON array back to the file
+                        Files.write(Paths.get("ByteME/data/pendingOrders.json"), jsonArray.toString(4).getBytes(),
+                                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                        System.out.println(orderId + " status was updated to: " + status);
+                    } else {
+                        System.out.println(orderId + " not found in pending orders.");
+                    }
+
+                } catch (IOException e) {
+                    System.out.println("Error reading or writing to JSON file: " + e.getMessage());
+                }
                 return;
             }
         }
@@ -217,6 +258,7 @@ public class OrderManager {
                 // Move from pending to completed orders
                 pendingOrders.remove(order);
                 completedOrders.add(order);
+                removeOrder(order.getOrderId());
                 order.getCustomer().completeOrder(order);
                 System.out.println("\nOrder " + order.getOrderId() + " moved to completed orders.");
 
@@ -229,5 +271,42 @@ public class OrderManager {
             }
         });
         deliveryThread.start();
+    }
+
+    public void removeOrder(String orderId) {
+        try {
+            // Read the existing content from the file
+            String existingContent = "";
+            if (Files.exists(Paths.get("ByteME/data/pendingOrders.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/pendingOrders.json")));
+            }
+
+            // Parse the existing content as a JSONArray
+            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+            // Iterate through the JSONArray and find the item to remove
+            boolean itemFound = false;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject existingItem = jsonArray.getJSONObject(i);
+                if (existingItem.getString("orderId").equalsIgnoreCase(orderId)) {
+                    // Item found, remove it from the JSONArray
+                    jsonArray.remove(i);
+                    itemFound = true;
+                    break;
+                }
+            }
+
+            if (itemFound) {
+                // Write the updated JSON array back to the file
+                Files.write(Paths.get("ByteME/data/pendingOrders.json"), jsonArray.toString(4).getBytes(),
+                        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                System.out.println(orderId + " was removed.");
+            } else {
+                System.out.println(orderId + " not found in pending orders.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading or writing to JSON file: " + e.getMessage());
+        }
     }
 }
