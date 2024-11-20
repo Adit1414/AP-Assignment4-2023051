@@ -1,5 +1,8 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +26,20 @@ public class Order {
         this.address = address;
         foodItemList = new ArrayList<>();
         updateFoodItemList();
+    }
+
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orderId", orderId);
+        jsonObject.put("status", status);
+
+        JSONArray itemsArray = new JSONArray();
+        for (OrderItem item : orderItemList) {
+            itemsArray.put(item.toJson()); // Ensure OrderItem has a similar `toJson` method
+        }
+        jsonObject.put("items", itemsArray);
+
+        return jsonObject;
     }
 
     private void updateFoodItemList() {

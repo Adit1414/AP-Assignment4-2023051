@@ -21,6 +21,16 @@
             <artifactId>json</artifactId>
             <version>20230227</version> <!-- Latest version as of now -->
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20210307</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util-ajax</artifactId>
+            <version>9.4.46.v20220331</version>
+        </dependency>
     </dependencies>
 
     <build>

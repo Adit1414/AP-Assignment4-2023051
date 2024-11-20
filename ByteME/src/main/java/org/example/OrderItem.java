@@ -1,5 +1,7 @@
 package org.example;
 
+import org.json.JSONObject;
+
 public class OrderItem {
     private FoodItem item;
     private int quantity;
@@ -27,5 +29,12 @@ public class OrderItem {
     @Override
     public String toString(){
         return "Name: " + item.getName() + ", Quantity: " + String.valueOf(quantity);
+    }
+
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("itemName", item.getName());
+        jsonObject.put("quantity", quantity);
+        return jsonObject;
     }
 }

@@ -71,6 +71,14 @@ public class CustomerSerializer {
                     // Order found, update its status
                     existingItem.put("cart", customer.cart.getOrderList());
                     existingItem.put("isVIP", customer.getIsVIP());
+
+                    JSONArray currentOrdersArray = new JSONArray();
+                    for (Order order : customer.getCurrentOrders()) {
+                        currentOrdersArray.put(order.toJson());
+                    }
+                    existingItem.put("current orders", currentOrdersArray);
+
+
 //                    existingItem.put("current orders", this.currentOrders);
 //                    existingItem.put("orders history", this.ordersHistory);
 
