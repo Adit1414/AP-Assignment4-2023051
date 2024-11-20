@@ -19,7 +19,7 @@ public class Customer{
     private List<Order> ordersHistory;
     private List<Order> currentOrders;
     private static final Menu menu = Menu.getInstance();
-    private final Cart cart;
+    public final Cart cart;
     private final Scanner scanner = new Scanner(System.in);
 
     public Customer(String name, String email, String password){
@@ -156,7 +156,7 @@ public class Customer{
             scanner.nextLine();
             orderItem = new OrderItem(item, quantity);
             cart.addItem(orderItem);
-            updateJsonCart();
+            CustomerSerializer.updateJsonData(this);
         }
         else //If the item is already in the cart, just adding the quantity
         {
@@ -169,70 +169,32 @@ public class Customer{
             cart.updateTotal();
             System.out.println(quantity + " " + orderItem.getItem().getName() + " added to cart.");
             System.out.println("Now there are " + orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in cart.");
-            updateJsonCart();
+            CustomerSerializer.updateJsonData(this);
         }
     }
-    public void removeFromCart(){
+    public void removeFromCart() {
         System.out.println("Name of item to remove from cart: ");
         String name = scanner.nextLine();
         OrderItem orderItem = cart.searchItem(name);
-        if(orderItem==null){
+        if (orderItem == null) {
             return;
         }
         System.out.println(orderItem);
         System.out.println("Quantity of the item to remove: ");
         int quantity = scanner.nextInt();
         scanner.nextLine();
-        if (quantity>orderItem.getQuantity()){
+        if (quantity > orderItem.getQuantity()) {
             System.out.println("Invalid quantity.");
-        }
-        else if (quantity == orderItem.getQuantity()) {
+        } else if (quantity == orderItem.getQuantity()) {
             cart.getOrderList().remove(orderItem);
             cart.updateTotal();
-            updateJsonCart();
+            CustomerSerializer.updateJsonData(this);
             System.out.println(orderItem.getItem().getName() + " removed from cart.");
-        }
-        else {
-            orderItem.setQuantity(orderItem.getQuantity()-quantity);
+        } else {
+            orderItem.setQuantity(orderItem.getQuantity() - quantity);
             cart.updateTotal();
-            updateJsonCart();
+            CustomerSerializer.updateJsonData(this);
             System.out.println(quantity + " items removed from cart.");
-        }
-    }
-    private void updateJsonCart() {
-        try {
-            // Read the existing content from the file
-            String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
-            }
-
-            // Parse the existing content as a JSONArray
-            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
-
-            // Iterate through the JSONArray and find the order to update
-            boolean itemFound = false;
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject existingItem = jsonArray.getJSONObject(i);
-                if (existingItem.getString("email").equalsIgnoreCase(this.email)) {
-                    // Order found, update its status
-                    existingItem.put("cart", this.cart.getOrderList()); // Use `put` to update the value
-                    itemFound = true;
-                    break;
-                }
-            }
-
-            if (itemFound) {
-                // Write the updated JSON array back to the file
-                Files.write(Paths.get("ByteME/data/customer.json"), jsonArray.toString(4).getBytes(),
-                        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-                System.out.println(this.name + " cart was updated");
-            } else {
-                System.out.println(this.name + " not found.");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error reading or writing to JSON file: " + e.getMessage());
         }
     }
 
@@ -279,8 +241,8 @@ public class Customer{
             orderManager.addOrder(order);
             currentOrders.add(order);
             this.cart.clear();
-            updateJsonCart();
             PendingOrderSerializer.saveToFile(order);
+            CustomerSerializer.updateJsonData(this);
             System.out.println("Checkout successful! Thank you for your order.");
             if(order.isVip()){
                 orderManager.handleStatus(order, "Accepted");
@@ -464,6 +426,7 @@ public class Customer{
 
         if (confirmation.equalsIgnoreCase("Y")) {
             setVIP(true);
+            CustomerSerializer.updateJsonData(this);
             System.out.println("Congratulations!! You are now a VIP customer of our canteen.");
         }
         else if(confirmation.equalsIgnoreCase("N")){
