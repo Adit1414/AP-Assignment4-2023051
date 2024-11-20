@@ -6,30 +6,7 @@
         "name": "Customer",
         "email": "c",
         "isVIP": false,
-        "cart": [
-            {
-                "item": {
-                    "reviews": [],
-                    "price": 40,
-                    "available": true,
-                    "rating": 0,
-                    "name": "Chowmein",
-                    "category": "Chinese"
-                },
-                "quantity": 2
-            },
-            {
-                "item": {
-                    "reviews": [],
-                    "price": 30,
-                    "available": true,
-                    "rating": 0,
-                    "name": "Alu Parantha",
-                    "category": "North Indian"
-                },
-                "quantity": 30
-            }
-        ]
+        "cart": []
     },
     {
         "password": "c1pass",

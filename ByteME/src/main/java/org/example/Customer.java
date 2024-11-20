@@ -279,6 +279,7 @@ public class Customer{
             orderManager.addOrder(order);
             currentOrders.add(order);
             this.cart.clear();
+            updateJsonCart();
             PendingOrderSerializer.saveToFile(order);
             System.out.println("Checkout successful! Thank you for your order.");
             if(order.isVip()){
