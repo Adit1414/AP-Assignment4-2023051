@@ -8,7 +8,7 @@ public class Order {
     private final Customer customer;
     private final List<OrderItem> orderItemList;
     private final List<FoodItem> foodItemList;
-    private final String orderId;
+    private String orderId;
     private String status;
     private String specialRequest;
     private int totalPrice;
@@ -89,5 +89,9 @@ public class Order {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId=orderId;
     }
 }

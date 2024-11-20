@@ -1,0 +1,61 @@
+[
+    {
+        "password": "c",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer",
+        "email": "c",
+        "isVIP": false,
+        "cart": [
+            {
+                "item": {
+                    "reviews": [],
+                    "price": 40,
+                    "available": true,
+                    "rating": 0,
+                    "name": "Chowmein",
+                    "category": "Chinese"
+                },
+                "quantity": 2
+            },
+            {
+                "item": {
+                    "reviews": [],
+                    "price": 30,
+                    "available": true,
+                    "rating": 0,
+                    "name": "Alu Parantha",
+                    "category": "North Indian"
+                },
+                "quantity": 30
+            }
+        ]
+    },
+    {
+        "password": "c1pass",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer1",
+        "email": "c1@iiitd",
+        "isVIP": false,
+        "cart": []
+    },
+    {
+        "password": "c2pass",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer2",
+        "email": "c2@iiitd",
+        "isVIP": false,
+        "cart": []
+    },
+    {
+        "password": "c3pass",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer3",
+        "email": "c3@iiitd",
+        "isVIP": false,
+        "cart": []
+    }
+]

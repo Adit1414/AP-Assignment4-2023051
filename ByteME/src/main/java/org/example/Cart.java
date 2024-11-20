@@ -1,5 +1,7 @@
 package org.example;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,5 +58,10 @@ public class Cart {
     public void clear() {
         this.orderList= new ArrayList<>();
         totalPrice=0;
+    }
+
+    public void setOrdersList(List<OrderItem> cart) {
+        this.orderList=cart;
+        updateTotal();
     }
 }

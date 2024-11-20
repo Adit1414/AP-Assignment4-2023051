@@ -1,5 +1,12 @@
 package org.example;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,8 +16,8 @@ public class Customer{
     private final String email;
     private final String password;
     private boolean isVIP;
-    private final List<Order> ordersHistory;
-    private final List<Order> currentOrders;
+    private List<Order> ordersHistory;
+    private List<Order> currentOrders;
     private static final Menu menu = Menu.getInstance();
     private final Cart cart;
     private final Scanner scanner = new Scanner(System.in);
@@ -23,6 +30,47 @@ public class Customer{
         ordersHistory = new ArrayList<>();
         currentOrders = new ArrayList<>();
         cart= new Cart();
+    }
+
+    public static void add(Customer customer, List<Customer> customers) {
+        if(!customers.contains(customer)){
+            customers.add(customer);
+        }
+
+        // Check if the item already exists in the menu by reading the existing JSON file
+        if (itemExistsInFile(customer)) {
+            System.out.println("This item already exists in the menu.");
+        } else {
+            // Save the item to the file
+            CustomerSerializer.saveToFile(customer);
+            System.out.println("Item added to the menu.");
+        }
+    }
+
+    private static boolean itemExistsInFile(Customer customer) {
+        try {
+            // Read the existing content from the file
+            String existingContent = "";
+            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            }
+
+            // Parse the existing content as a JSONArray
+            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+            // Check if the item already exists in the JSON array
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject existingItem = jsonArray.getJSONObject(i);
+
+                // Compare the item's name and category (you can extend this comparison to other attributes if needed)
+                if (existingItem.getString("email").equals(customer.getEmail())) {
+                    return true; // Item already exists
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the JSON file: " + e.getMessage());
+        }
+        return false; // Item does not exist
     }
 
     //Getters and Setters
@@ -108,6 +156,7 @@ public class Customer{
             scanner.nextLine();
             orderItem = new OrderItem(item, quantity);
             cart.addItem(orderItem);
+            updateJsonCart();
         }
         else //If the item is already in the cart, just adding the quantity
         {
@@ -120,6 +169,7 @@ public class Customer{
             cart.updateTotal();
             System.out.println(quantity + " " + orderItem.getItem().getName() + " added to cart.");
             System.out.println("Now there are " + orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in cart.");
+            updateJsonCart();
         }
     }
     public void removeFromCart(){
@@ -139,14 +189,53 @@ public class Customer{
         else if (quantity == orderItem.getQuantity()) {
             cart.getOrderList().remove(orderItem);
             cart.updateTotal();
+            updateJsonCart();
             System.out.println(orderItem.getItem().getName() + " removed from cart.");
         }
         else {
             orderItem.setQuantity(orderItem.getQuantity()-quantity);
             cart.updateTotal();
+            updateJsonCart();
             System.out.println(quantity + " items removed from cart.");
         }
     }
+    private void updateJsonCart() {
+        try {
+            // Read the existing content from the file
+            String existingContent = "";
+            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            }
+
+            // Parse the existing content as a JSONArray
+            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+            // Iterate through the JSONArray and find the order to update
+            boolean itemFound = false;
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject existingItem = jsonArray.getJSONObject(i);
+                if (existingItem.getString("email").equalsIgnoreCase(this.email)) {
+                    // Order found, update its status
+                    existingItem.put("cart", this.cart.getOrderList()); // Use `put` to update the value
+                    itemFound = true;
+                    break;
+                }
+            }
+
+            if (itemFound) {
+                // Write the updated JSON array back to the file
+                Files.write(Paths.get("ByteME/data/customer.json"), jsonArray.toString(4).getBytes(),
+                        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+                System.out.println(this.name + " cart was updated");
+            } else {
+                System.out.println(this.name + " not found.");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading or writing to JSON file: " + e.getMessage());
+        }
+    }
+
     public void viewCartTotal(){
         System.out.println("Total price: " + cart.getTotalPrice());
     }
@@ -398,5 +487,21 @@ public class Customer{
             currentOrders.remove(order);
             ordersHistory.add(order);
         }
+    }
+
+    public List<OrderItem> getCart() {
+        return cart.getOrderList();
+    }
+
+    public void setOrdersHistory(List<Order> ordersHistory) {
+        this.ordersHistory=ordersHistory;
+    }
+
+    public void setCurrentOrders(List<Order> currentOrders) {
+        this.currentOrders=currentOrders;
+    }
+
+    public void setCart(List<OrderItem> cart) {
+        this.cart.setOrdersList(cart);
     }
 }

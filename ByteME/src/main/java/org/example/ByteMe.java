@@ -1,5 +1,8 @@
 package org.example;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Scanner;
@@ -24,7 +27,8 @@ public class ByteMe {
             System.out.println("\nWelcome to Byte Me!");
             System.out.println("1. Login as a customer");
             System.out.println("2. Login as an admin");
-            System.out.println("3. Exit");
+            System.out.println("3. Sign up as a customer");
+            System.out.println("4. Exit");
             System.out.print("\nEnter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -39,6 +43,7 @@ public class ByteMe {
                     for(Customer customer : customers){
                         if(customer.getEmail().equals(email) && customer.getPassword().equals(pass)){
                             System.out.println("Welcome, " + customer.getName());
+                            addCustomerData(customer);
                             found=true;
                             customerMenu(customer);
                             break;
@@ -60,6 +65,9 @@ public class ByteMe {
                     System.out.println("Email or password is incorrect.");
                     break;
                 case 3:
+                    signUp();
+                    break;
+                case 4:
                     exit = true;
                     System.out.println("\nExiting...");
                     break;
@@ -67,6 +75,107 @@ public class ByteMe {
                     System.out.println("\nInvalid choice. Please try again.");
             }
         }
+    }
+
+    private static List<Order> jsonToOrderList(JSONArray jsonArray) {
+        List<Order> orderList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject orderJson = jsonArray.getJSONObject(i);
+
+            // Extract the customer details (assuming customer is represented by email or other key)
+            String customerEmail = orderJson.getString("customerEmail");
+            Customer customer = null;
+
+            for(Customer c : customers){
+                if(c.getEmail().equals(customerEmail)){
+                    customer=c;
+                    break;
+                }
+            }
+
+            // Extract the order item list
+            JSONArray orderItemsJsonArray = orderJson.getJSONArray("orderItemList");
+            if(orderItemsJsonArray!=null) {
+                List<OrderItem> orderItemList = jsonToOrderItemList(orderItemsJsonArray);
+
+                // Extract the address
+                String address = orderJson.getString("address");
+
+                // Create a new Order object
+                Order order = new Order(customer, orderItemList, address);
+
+                // Set additional fields
+                order.setOrderId(orderJson.getString("orderId"));
+                order.setStatus(orderJson.getString("status"));
+                order.setSpecialRequest(orderJson.getString("specialRequest"));
+
+                // Optionally, if foodItemList needs to be handled separately, update it as needed
+                // order.updateFoodItemList() might already handle this
+
+                orderList.add(order);
+            }
+        }
+        return orderList;
+    }
+
+    private static List<OrderItem> jsonToOrderItemList(JSONArray jsonArray) {
+        List<OrderItem> orderItemList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject orderItemJson = jsonArray.getJSONObject(i);
+
+            if(orderItemJson!=null) {
+                // Extract details of OrderItem
+//                String foodName = orderItemJson.getString("item");
+
+                JSONObject foodItemJson = orderItemJson.getJSONObject("item");
+                String name = foodItemJson.getString("name");
+                FoodItem fi = menu.searchItem(name);
+
+                int quantity = orderItemJson.getInt("quantity");
+
+
+                // Create a new OrderItem
+                OrderItem orderItem = new OrderItem(fi, quantity);
+
+                orderItemList.add(orderItem);
+            }
+        }
+        return orderItemList;
+    }
+
+
+    private static void addCustomerData(Customer customer){
+        try {
+            // Read the existing content from the file
+            String existingContent = "";
+            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
+                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            }
+
+            // Parse the existing content as a JSONArray
+            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
+
+            // Check if the item already exists in the JSON array
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject existingItem = jsonArray.getJSONObject(i);
+
+                // Compare the item's name and category (you can extend this comparison to other attributes if needed)
+                if (existingItem.getString("email").equals(customer.getEmail())) {
+                    customer.setOrdersHistory(jsonToOrderList(existingItem.getJSONArray("orders history")));
+                    customer.setCurrentOrders(jsonToOrderList(existingItem.getJSONArray("current orders")));
+                    customer.setVIP(existingItem.getBoolean("isVIP"));
+                    customer.setCart(jsonToOrderItemList(existingItem.getJSONArray("cart")));
+
+                    return; // Item already exists
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading the JSON file: " + e.getMessage());
+        }
+    }
+
+    private static void signUp(){
+        //Sign up functionalities
     }
 
     public static void customerMenu(Customer customer) {
@@ -240,11 +349,11 @@ public class ByteMe {
 
     public static void seedData(){
         admin = new Admin("ap", orderManager);
-    
-        customers.add(new Customer("Customer", "c", "c"));
-        customers.add(new Customer("Customer1", "c1@iiitd", "c1pass"));
-        customers.add(new Customer("Customer2", "c2@iiitd", "c2pass"));
-        customers.add(new Customer("Customer3", "c3@iiitd", "c3pass"));
+
+        Customer.add(new Customer("Customer", "c", "c"), customers);
+        Customer.add(new Customer("Customer1", "c1@iiitd", "c1pass"), customers);
+        Customer.add(new Customer("Customer2", "c2@iiitd", "c2pass"), customers);
+        Customer.add(new Customer("Customer3", "c3@iiitd", "c3pass"), customers);
 
         menu.addItem(new FoodItem("Chowmein", 40, "Chinese"));
         menu.addItem(new FoodItem("Egg Chowmein", 50, "Chinese"));
