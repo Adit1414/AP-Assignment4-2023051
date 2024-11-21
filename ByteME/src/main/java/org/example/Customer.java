@@ -293,6 +293,7 @@ public class Customer{
                     order.setStatus("Cancelled");
                     System.out.println("Order canceled successfully: " + order.getOrderItemList());
                     ordersHistory.add(order);
+                    CustomerSerializer.updateJsonData(this);
                 }
                 else {
                     System.out.println("Cannot cancel order");

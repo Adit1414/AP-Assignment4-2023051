@@ -1,81 +1,19 @@
 [
     {
-        "order items": [
-            {
-                "item": {
-                    "reviews": [],
-                    "price": 40,
-                    "name": "Chowmein",
-                    "rating": 0,
-                    "available": true,
-                    "category": "Chinese"
-                },
-                "quantity": 2
-            },
-            {
-                "item": {
-                    "reviews": [],
-                    "price": 30,
-                    "name": "Alu Parantha",
-                    "rating": 0,
-                    "available": true,
-                    "category": "North Indian"
-                },
-                "quantity": 30
-            }
-        ],
-        "total": 980,
-        "address": "",
-        "orderId": "e945f5b7",
-        "special request": "",
-        "status": "Received"
-    },
-    {
-        "order items": [
-            {
-                "item": {
-                    "reviews": [],
-                    "price": 40,
-                    "name": "Chowmein",
-                    "rating": 0,
-                    "available": true,
-                    "category": "Chinese"
-                },
-                "quantity": 2
-            },
-            {
-                "item": {
-                    "reviews": [],
-                    "price": 30,
-                    "name": "Alu Parantha",
-                    "rating": 0,
-                    "available": true,
-                    "category": "North Indian"
-                },
-                "quantity": 30
-            }
-        ],
-        "total": 980,
-        "address": "",
-        "orderId": "76b22eeb",
-        "special request": "",
-        "status": "Received"
-    },
-    {
         "order items": [{
             "item": {
                 "reviews": [],
                 "price": 40,
-                "rating": 0,
                 "available": true,
+                "rating": 0,
                 "name": "Chowmein",
                 "category": "Chinese"
             },
-            "quantity": 7
+            "quantity": 3
         }],
-        "total": 280,
+        "total": 120,
         "address": "",
-        "orderId": "78405dc3",
+        "orderId": "fc772e5b",
         "special request": "",
         "status": "Received"
     },
@@ -93,7 +31,7 @@
         }],
         "total": 160,
         "address": "",
-        "orderId": "cbe20bd1",
+        "orderId": "998b6289",
         "special request": "",
         "status": "Received"
     },
@@ -107,29 +45,11 @@
                 "available": true,
                 "category": "Chinese"
             },
-            "quantity": 4
+            "quantity": 5
         }],
-        "total": 160,
+        "total": 200,
         "address": "",
-        "orderId": "e466bfd7",
-        "special request": "",
-        "status": "Received"
-    },
-    {
-        "order items": [{
-            "item": {
-                "reviews": [],
-                "price": 40,
-                "available": true,
-                "rating": 0,
-                "name": "Chowmein",
-                "category": "Chinese"
-            },
-            "quantity": 10
-        }],
-        "total": 400,
-        "address": "",
-        "orderId": "9857d546",
+        "orderId": "f65d9105",
         "special request": "",
         "status": "Received"
     }

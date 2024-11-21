@@ -2,18 +2,21 @@
     {
         "password": "c",
         "orders history": [],
-        "current orders": [{
-            "orderId": "9857d546",
-            "items": [{
-                "itemName": "Chowmein",
-                "quantity": 10
-            }],
-            "status": "Received"
-        }],
+        "current orders": [],
         "name": "Customer",
         "email": "c",
         "isVIP": false,
-        "cart": []
+        "cart": [{
+            "item": {
+                "reviews": [],
+                "price": 40,
+                "name": "Chowmein",
+                "rating": 0,
+                "available": true,
+                "category": "Chinese"
+            },
+            "quantity": 10
+        }]
     },
     {
         "password": "c1pass",

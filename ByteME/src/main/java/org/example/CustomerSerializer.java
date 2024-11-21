@@ -10,18 +10,18 @@ import java.nio.file.StandardOpenOption;
 
 public class CustomerSerializer {
 
-    private static String add(Customer item) {
-        if (item == null) {
+    private static String add(Customer customer) {
+        if (customer == null) {
             throw new IllegalArgumentException("Item cannot be null");
         }
         JSONObject jsonItem = new JSONObject();
-        jsonItem.put("name", item.getName());
-        jsonItem.put("email", item.getEmail());
-        jsonItem.put("password", item.getPassword());
-        jsonItem.put("isVIP", item.getIsVIP());
-        jsonItem.put("orders history", item.getOrdersHistory());
-        jsonItem.put("current orders", item.getCurrentOrders());
-        jsonItem.put("cart", item.getCart());
+        jsonItem.put("name", customer.getName());
+        jsonItem.put("email", customer.getEmail());
+        jsonItem.put("password", customer.getPassword());
+        jsonItem.put("isVIP", customer.getIsVIP());
+        jsonItem.put("orders history", customer.getOrdersHistory());
+        jsonItem.put("current orders", customer.getCurrentOrders());
+        jsonItem.put("cart", customer.getCart());
 
         return jsonItem.toString();
     }
@@ -77,6 +77,12 @@ public class CustomerSerializer {
                         currentOrdersArray.put(order.toJson());
                     }
                     existingItem.put("current orders", currentOrdersArray);
+
+                    JSONArray ordersHistoryArray = new JSONArray();
+                    for (Order order : customer.getCurrentOrders()) {
+                        ordersHistoryArray.put(order.toJson());
+                    }
+                    existingItem.put("orders history", ordersHistoryArray);
 
 
 //                    existingItem.put("current orders", this.currentOrders);
