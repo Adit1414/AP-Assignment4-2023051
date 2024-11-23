@@ -1,6 +1,8 @@
-package org.example;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.example.Cart;
+import org.example.FoodItem;
+import org.example.OrderItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

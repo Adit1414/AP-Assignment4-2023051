@@ -31,9 +31,14 @@ public class OrderManager {
     public ArrayList<Order> getCompletedOrders() {
         return completedOrders;
     }
-
     // Adds a new order to the pending orders list, with VIP orders prioritized
     public void addOrder(Order order) {
+       for(OrderItem orderItem : order.getOrderItemList()){
+            FoodItem foodItem = MenuSerializer.deserialize(orderItem.getItem());
+            if(!foodItem.isAvailable()){
+                throw new IllegalArgumentException("Item is out of stock.");
+            }
+       }
         pendingOrders.add(order);
         System.out.println("Order added successfully.");
     }

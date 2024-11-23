@@ -232,24 +232,28 @@ public class Customer{
         System.out.println("Do you want to proceed with the order? (Y/N): ");
         String confirmation = scanner.nextLine();
 
-        if (confirmation.equalsIgnoreCase("Y")) {
-            Order order = new Order(this, cart.getOrderList(), address);
-            order.setSpecialRequest(request);
-            orderManager.addOrder(order);
-            currentOrders.add(order);
-            this.cart.clear();
-            PendingOrderSerializer.saveToFile(order);
-            CustomerSerializer.updateJsonData(this);
-            System.out.println("Checkout successful! Thank you for your order.");
-            if(order.isVip()){
-                orderManager.handleStatus(order, "Accepted");
+        try {
+            if (confirmation.equalsIgnoreCase("Y")) {
+                Order order = new Order(this, cart.getOrderList(), address);
+                order.setSpecialRequest(request);
+                orderManager.addOrder(order);
+                currentOrders.add(order);
+                this.cart.clear();
+                PendingOrderSerializer.saveToFile(order);
+                CustomerSerializer.updateJsonData(this);
+                System.out.println("Checkout successful! Thank you for your order.");
+                if (order.isVip()) {
+                    orderManager.handleStatus(order, "Accepted");
+                }
+            } else if (confirmation.equalsIgnoreCase("N")) {
+                System.out.println("Checkout cancelled. You can continue shopping.");
+            } else {
+                System.out.println("Enter Y or N. Checkout cancelled.");
             }
         }
-        else if(confirmation.equalsIgnoreCase("N")){
-            System.out.println("Checkout cancelled. You can continue shopping.");
-        }
-        else {
-            System.out.println("Enter Y or N. Checkout cancelled.");
+        catch (IllegalArgumentException e) {
+            // Handle the exception
+            System.out.println(e.getMessage());
         }
     }
 
