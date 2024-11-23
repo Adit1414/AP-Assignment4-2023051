@@ -38,6 +38,7 @@ public class FoodItem {
 
     public void setAvailable(boolean availability) {
         isAvailable = availability;
+        MenuSerializer.updateJsonData(this);
     }
 
     public String getCategory() {
@@ -63,7 +64,8 @@ public class FoodItem {
         for (Review r : reviews){
             ratingSum +=r.getRating();
         }
-        this.rating= ratingSum / ratingNum;
+        setRating(ratingSum / ratingNum);
+        MenuSerializer.updateJsonData(this);
         System.out.println("Review added.");
     }
 
@@ -73,5 +75,9 @@ public class FoodItem {
                 "\nPrice: " + String.valueOf(this.price) +
                 "\nIs Available: " + String.valueOf(this.isAvailable) +
                 "\nCategory: " + this.category;
+    }
+
+    public void setRating(float rating) {
+        this.rating=rating;
     }
 }

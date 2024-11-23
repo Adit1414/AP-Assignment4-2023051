@@ -1,7 +1,5 @@
 package org.example;
 
-import org.json.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +32,15 @@ public class Cart {
     }
 
     public void addItem(OrderItem item){
-        orderList.add(item);
-        updateTotal();
-        System.out.println(item.getQuantity() + " " + item.getItem().getName() + " added to cart.");
+        FoodItem foodItem = MenuSerializer.deserialize(item.getItem());
+        if(!foodItem.isAvailable()){
+            throw new IllegalArgumentException("Item is out of stock.");
+        }
+        else {
+            orderList.add(item);
+            updateTotal();
+            System.out.println(item.getQuantity() + " " + item.getItem().getName() + " added to cart.");
+        }
     }
     public OrderItem searchItem(String name){
         for (OrderItem orderItem : orderList){
@@ -63,5 +67,24 @@ public class Cart {
     public void setOrdersList(List<OrderItem> cart) {
         this.orderList=cart;
         updateTotal();
+    }
+
+    public void updateItemQuantity(OrderItem orderItem, int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
+        orderItem.setQuantity(orderItem.getQuantity() + quantity);
+        updateTotal();
+        System.out.println(quantity + " " + orderItem.getItem().getName() + " added to cart.");
+        System.out.println("Now there are " + orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in cart.");
+    }
+
+    public int getItemQuantity(FoodItem item) {
+        for(OrderItem orderItem : orderList){
+            if(orderItem.getItem().equals(item)){
+                return orderItem.getQuantity();
+            }
+        }
+        return 0;
     }
 }

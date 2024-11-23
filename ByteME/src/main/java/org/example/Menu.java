@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
@@ -43,7 +44,7 @@ public class Menu {
         } else {
             // Save the item to the file
             MenuSerializer.saveToFile(item);
-            System.out.println("Item added to the menu.");
+            System.out.println(item.getName() + " added to the menu.");
         }
     }
 
@@ -51,8 +52,10 @@ public class Menu {
         try {
             // Read the existing content from the file
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/menu.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/menu.json")));
+
+            Path path = Paths.get("ByteME/data/menu.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray

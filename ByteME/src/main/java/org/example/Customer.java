@@ -39,11 +39,11 @@ public class Customer{
 
         // Check if the item already exists in the menu by reading the existing JSON file
         if (itemExistsInFile(customer)) {
-            System.out.println("This item already exists in the menu.");
+            System.out.println("This customer already exists.");
         } else {
             // Save the item to the file
             CustomerSerializer.saveToFile(customer);
-            System.out.println("Item added to the menu.");
+            System.out.println("Customer added.");
         }
     }
 
@@ -136,40 +136,37 @@ public class Customer{
         cart.viewCart();
     }
     public void addToCart(){
-        System.out.println("Name of item to add to cart: ");
-        String name = scanner.nextLine();
-        FoodItem item = menu.searchItem(name);
-        if(item==null){
-            return;
-        }
-        if(!item.isAvailable()){
-            System.out.println("Item is not available right now. Try again later.");
-            return;
-        }
+        try {
+            System.out.println("Name of item to add to cart: ");
+            String name = scanner.nextLine();
+            FoodItem item = menu.searchItem(name);
+            if (item == null) {
+                return;
+            }
+            OrderItem orderItem = cart.searchItem(name);
 
-        OrderItem orderItem = cart.searchItem(name);
-
-        if(orderItem==null) //If it's a new item being added to cart
-        {
-            System.out.println("Quantity of the item: ");
-            int quantity = scanner.nextInt();
-            scanner.nextLine();
-            orderItem = new OrderItem(item, quantity);
-            cart.addItem(orderItem);
-            CustomerSerializer.updateJsonData(this);
-        }
-        else //If the item is already in the cart, just adding the quantity
-        {
-            System.out.println("There are already " +orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in the cart: ");
+            if (orderItem == null) //If it's a new item being added to cart
+            {
+                System.out.println("Quantity of the item: ");
+                int quantity = scanner.nextInt();
+                scanner.nextLine();
+                orderItem = new OrderItem(item, quantity);
+                cart.addItem(orderItem);
+                CustomerSerializer.updateJsonData(this);
+            } else //If the item is already in the cart, just adding the quantity
+            {
+                System.out.println("There are already " + orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in the cart: ");
 //            System.out.println(orderItem);
-            System.out.println("Quantity to be added to this item in the cart: ");
-            int quantity = scanner.nextInt();
-            scanner.nextLine();
-            orderItem.setQuantity(orderItem.getQuantity()+quantity);
-            cart.updateTotal();
-            System.out.println(quantity + " " + orderItem.getItem().getName() + " added to cart.");
-            System.out.println("Now there are " + orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in cart.");
-            CustomerSerializer.updateJsonData(this);
+                System.out.println("Quantity to be added to this item in the cart: ");
+                int quantity = scanner.nextInt();
+                scanner.nextLine();
+                cart.updateItemQuantity(orderItem, quantity);
+                CustomerSerializer.updateJsonData(this);
+            }
+        }
+        catch (IllegalArgumentException e) {
+            // Handle the exception
+            System.out.println(e.getMessage());
         }
     }
     public void removeFromCart() {

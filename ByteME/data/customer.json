@@ -6,22 +6,26 @@
         "name": "Customer",
         "email": "c",
         "isVIP": false,
-        "cart": [{
-            "item": {
-                "reviews": [],
-                "price": 40,
-                "name": "Chowmein",
-                "rating": 0,
-                "available": true,
-                "category": "Chinese"
-            },
-            "quantity": 10
-        }]
+        "cart": []
     },
     {
         "password": "c1pass",
-        "orders history": [],
-        "current orders": [],
+        "orders history": [{
+            "orderId": "d8fa6302",
+            "items": [{
+                "itemName": "Chowmein",
+                "quantity": 3
+            }],
+            "status": "Received"
+        }],
+        "current orders": [{
+            "orderId": "d8fa6302",
+            "items": [{
+                "itemName": "Chowmein",
+                "quantity": 3
+            }],
+            "status": "Received"
+        }],
         "name": "Customer1",
         "email": "c1@iiitd",
         "isVIP": false,

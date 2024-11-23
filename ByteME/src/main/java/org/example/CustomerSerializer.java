@@ -97,7 +97,7 @@ public class CustomerSerializer {
                 // Write the updated JSON array back to the file
                 Files.write(Paths.get("ByteME/data/customer.json"), jsonArray.toString(4).getBytes(),
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-                System.out.println(customer.getName() + " cart was updated");
+                System.out.println(customer.getName() + " data was updated");
             } else {
                 System.out.println(customer.getName() + " not found.");
             }
