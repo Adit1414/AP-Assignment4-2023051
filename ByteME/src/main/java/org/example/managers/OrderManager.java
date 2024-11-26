@@ -117,6 +117,7 @@ public class OrderManager {
                 order.setStatus("Denied");
                 order.getCustomer().getCurrentOrders().remove(order);
                 order.getCustomer().getOrdersHistory().add(order);
+                CustomerSerializer.updateJsonData(order.getCustomer());
                 System.out.println("Updated status to Denied for orders with removed item: " + item.getName());
             }
         }
@@ -197,6 +198,8 @@ public class OrderManager {
 
         switch (status) {
             case "Accepted":
+                order.setStatus("Accepted");
+                CustomerSerializer.updateJsonData(order.getCustomer());
                 // Add order to waitingQueue
                 waitingQueue.add(order);
                 System.out.println("\nOrder " + order.getOrderId() + " added to waiting queue.");
@@ -206,6 +209,10 @@ public class OrderManager {
                 break;
 
             case "Denied":
+                order.setStatus("Denied");
+                order.getCustomer().getCurrentOrders().remove(order);
+                order.getCustomer().getOrdersHistory().add(order);
+                CustomerSerializer.updateJsonData(order.getCustomer());
                 // Remove from pending orders
                 pendingOrders.remove(order);
                 System.out.println("\nOrder " + order.getOrderId() + " moved out of pending orders.");

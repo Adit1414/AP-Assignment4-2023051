@@ -1,0 +1,45 @@
+[
+    {
+        "password": "c",
+        "orders history": [{
+            "orderId": "c7264870",
+            "items": [{
+                "itemName": "Chowmein",
+                "quantity": 3
+            }],
+            "status": "Denied"
+        }],
+        "current orders": [],
+        "name": "Customer",
+        "email": "c",
+        "isVIP": false,
+        "cart": []
+    },
+    {
+        "password": "c1pass",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer1",
+        "email": "c1@iiitd",
+        "isVIP": false,
+        "cart": []
+    },
+    {
+        "password": "c2pass",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer2",
+        "email": "c2@iiitd",
+        "isVIP": false,
+        "cart": []
+    },
+    {
+        "password": "c3pass",
+        "orders history": [],
+        "current orders": [],
+        "name": "Customer3",
+        "email": "c3@iiitd",
+        "isVIP": false,
+        "cart": []
+    }
+]

@@ -151,8 +151,10 @@ public class Menu {
             }
         }
         List<FoodItem> categoryFood= items.get(category);
-        for (FoodItem food : categoryFood){
-            System.out.println(food);
+        if(categoryFood!=null) {
+            for (FoodItem food : categoryFood) {
+                System.out.println(food);
+            }
         }
     }
 

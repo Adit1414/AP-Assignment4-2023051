@@ -72,7 +72,7 @@ public class MenuSerializer {
                     foodItem.setCategory(jsonItem.getString("category"));
                     foodItem.setAvailable(jsonItem.getBoolean("available"));
                     foodItem.setRating(jsonItem.getFloat("rating"));
-                    System.out.println("Attributes updated for food item: " + foodItem.getName());
+//                    System.out.println("Attributes updated for food item: " + foodItem.getName());
                     return foodItem;
                 }
             }
@@ -115,7 +115,7 @@ public class MenuSerializer {
             }
 
             Files.write(path, jsonArray.toString(4).getBytes());
-            System.out.println("JSON data updated for food item: " + item.getName());
+//            System.out.println("JSON data updated for food item: " + item.getName());
 
         } catch (IOException e) {
 //            System.out.println("Error writing to JSON file: " + e.getMessage());

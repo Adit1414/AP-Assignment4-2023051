@@ -91,7 +91,7 @@ public class CustomerSerializer {
                     existingItem.put("current orders", currentOrdersArray);
 
                     JSONArray ordersHistoryArray = new JSONArray();
-                    for (Order order : customer.getCurrentOrders()) {
+                    for (Order order : customer.getOrdersHistory()) {
                         ordersHistoryArray.put(order.toJson());
                     }
                     existingItem.put("orders history", ordersHistoryArray);
@@ -115,7 +115,7 @@ public class CustomerSerializer {
         }
     }
 
-    public static void addCustomerData(Customer customer, List<Customer> customers) {
+    public static void deserialize(Customer customer, List<Customer> customers) {
         try {
             // Read the existing content from the file
             String existingContent = "";

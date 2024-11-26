@@ -457,6 +457,7 @@ public class Customer{
         if(order!=null && currentOrders.contains(order)){
             currentOrders.remove(order);
             ordersHistory.add(order);
+            CustomerSerializer.updateJsonData(this);
         }
     }
 

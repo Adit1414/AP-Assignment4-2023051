@@ -38,7 +38,7 @@ public class ByteMe {
                     for(Customer customer : customers){
                         if(customer.getEmail().equals(email) && customer.getPassword().equals(pass)){
                             System.out.println("Welcome, " + customer.getName());
-                            CustomerSerializer.addCustomerData(customer, customers);
+                            CustomerSerializer.deserialize(customer, customers);
 //                            CustomerSerializer.deserialize(customer);
                             found=true;
                             customerMenu(customer);
