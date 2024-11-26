@@ -1,4 +1,4 @@
-package org.example;
+package org.example.mains;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -8,7 +8,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class GuiApp {
@@ -44,22 +46,23 @@ public class GuiApp {
         menuTable.setForeground(tableForeground);
         JScrollPane menuScrollPane = new JScrollPane(menuTable);
 
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5)); // 2 rows, 1 column, 5px spacing
+//        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5)); // 2 rows, 1 column, 5px spacing
 
         JButton goToPendingOrdersButton = new JButton("View Pending Orders");
         goToPendingOrdersButton.setBackground(buttonBackground);
         goToPendingOrdersButton.setForeground(buttonForeground);
 
-        JButton goToAllOrdersButton = new JButton("View All Orders");
-        goToAllOrdersButton.setBackground(buttonBackground);
-        goToAllOrdersButton.setForeground(buttonForeground);
+//        JButton goToAllOrdersButton = new JButton("View All Orders");
+//        goToAllOrdersButton.setBackground(buttonBackground);
+//        goToAllOrdersButton.setForeground(buttonForeground);
 
-        buttonPanel.add(goToPendingOrdersButton);
-        buttonPanel.add(goToAllOrdersButton);
+//        buttonPanel.add(goToPendingOrdersButton);
+//        buttonPanel.add(goToAllOrdersButton);
 
         menuPanel.add(menuLabel, BorderLayout.NORTH);
         menuPanel.add(menuScrollPane, BorderLayout.CENTER);
-        menuPanel.add(buttonPanel, BorderLayout.SOUTH);
+//        menuPanel.add(buttonPanel, BorderLayout.SOUTH);
+        menuPanel.add(goToPendingOrdersButton, BorderLayout.SOUTH);
 
         // Second Panel: Pending Orders Page
         JPanel pendingOrdersPanel = new JPanel(new BorderLayout());
@@ -85,38 +88,38 @@ public class GuiApp {
         pendingOrdersPanel.add(pendingOrdersScrollPane, BorderLayout.CENTER);
         pendingOrdersPanel.add(backToMenuButton, BorderLayout.SOUTH);
 
-        // Third Panel: All Orders Page
-        JPanel allOrdersPanel = new JPanel(new BorderLayout());
-        JLabel allOrdersLabel = new JLabel("All Orders", SwingConstants.CENTER);
-        allOrdersLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        allOrdersLabel.setOpaque(true);
-        allOrdersLabel.setBackground(headerColor);
-        allOrdersLabel.setForeground(Color.WHITE);
-
-        String[] allOrdersColumns = {"Order ID", "Items", "Status"};
-        String[][] allOrdersData = {
-                {"1001", "Pizza x1", "Preparing"},
-                {"1002", "Pasta x2", "Out for Delivery"},
-                {"1000", "Burger x3", "Delivered"}
-        };
-        JTable allOrdersTable = new JTable(new DefaultTableModel(allOrdersData, allOrdersColumns));
-        allOrdersTable.setBackground(tableBackground);
-        allOrdersTable.setForeground(tableForeground);
-        JScrollPane allOrdersScrollPane = new JScrollPane(allOrdersTable);
-
-        JButton backToMenuButton1 = new JButton("Back to Menu");
-        backToMenuButton1.setBackground(buttonBackground);
-        backToMenuButton1.setForeground(buttonForeground);
-
-        allOrdersPanel.add(allOrdersLabel, BorderLayout.NORTH);
-        allOrdersPanel.add(allOrdersScrollPane, BorderLayout.CENTER);
-        allOrdersPanel.add(backToMenuButton1, BorderLayout.SOUTH);
+//        // Third Panel: All Orders Page
+//        JPanel allOrdersPanel = new JPanel(new BorderLayout());
+//        JLabel allOrdersLabel = new JLabel("All Orders", SwingConstants.CENTER);
+//        allOrdersLabel.setFont(new Font("Arial", Font.BOLD, 24));
+//        allOrdersLabel.setOpaque(true);
+//        allOrdersLabel.setBackground(headerColor);
+//        allOrdersLabel.setForeground(Color.WHITE);
+//
+//        String[] allOrdersColumns = {"Order ID", "Items", "Status"};
+//        String[][] allOrdersData = {
+//                {"1001", "Pizza x1", "Preparing"},
+//                {"1002", "Pasta x2", "Out for Delivery"},
+//                {"1000", "Burger x3", "Delivered"}
+//        };
+//        JTable allOrdersTable = new JTable(new DefaultTableModel(allOrdersData, allOrdersColumns));
+//        allOrdersTable.setBackground(tableBackground);
+//        allOrdersTable.setForeground(tableForeground);
+//        JScrollPane allOrdersScrollPane = new JScrollPane(allOrdersTable);
+//
+//        JButton backToMenuButton1 = new JButton("Back to Menu");
+//        backToMenuButton1.setBackground(buttonBackground);
+//        backToMenuButton1.setForeground(buttonForeground);
+//
+//        allOrdersPanel.add(allOrdersLabel, BorderLayout.NORTH);
+//        allOrdersPanel.add(allOrdersScrollPane, BorderLayout.CENTER);
+//        allOrdersPanel.add(backToMenuButton1, BorderLayout.SOUTH);
 
 
         // Add all panels to the main panel
         mainPanel.add(menuPanel, "MenuPage");
         mainPanel.add(pendingOrdersPanel, "PendingOrdersPage");
-        mainPanel.add(allOrdersPanel, "AllOrdersPage");
+//        mainPanel.add(allOrdersPanel, "AllOrdersPage");
 
 
         // Add Action Listeners for Buttons
@@ -127,12 +130,12 @@ public class GuiApp {
             }
         });
 
-        goToAllOrdersButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel, "AllOrdersPage");
-            }
-        });
+//        goToAllOrdersButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                cardLayout.show(mainPanel, "AllOrdersPage");
+//            }
+//        });
 
         backToMenuButton.addActionListener(new ActionListener() {
             @Override
@@ -141,12 +144,12 @@ public class GuiApp {
             }
         });
 
-        backToMenuButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cardLayout.show(mainPanel, "MenuPage");
-            }
-        });
+//        backToMenuButton1.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                cardLayout.show(mainPanel, "MenuPage");
+//            }
+//        });
 
         // Add main panel to the frame
         frame.add(mainPanel);
@@ -186,7 +189,15 @@ public class GuiApp {
     private static String[][] loadPendingOrderDataFromJson() {
         String[][] menuData = {};
         try {
-            FileReader reader = new FileReader("ByteME/data/pendingOrders.json");
+            File file = new File("ByteME/data/pendingOrders.json");
+            // Check if the file exists and is not empty
+            if (!file.exists() || file.length() == 0) {
+                // Write an empty JSON array to the file
+                try (FileWriter writer = new FileWriter(file)) {
+                    writer.write("[]");
+                }
+            }
+            FileReader reader = new FileReader(file);
             StringBuilder stringBuilder = new StringBuilder();
             int i;
             while ((i = reader.read()) != -1) {

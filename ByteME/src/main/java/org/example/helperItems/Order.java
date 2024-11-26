@@ -1,5 +1,6 @@
-package org.example;
+package org.example.helperItems;
 
+import org.example.mains.Customer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

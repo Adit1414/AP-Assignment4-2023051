@@ -2,9 +2,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //import src/main/java/org.example/Menu;
 //import data.menu.json;
-import org.example.Cart;
-import org.example.FoodItem;
-import org.example.OrderItem;
+import org.example.helperItems.Cart;
+import org.example.helperItems.FoodItem;
+import org.example.helperItems.OrderItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

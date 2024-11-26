@@ -1,4 +1,6 @@
-package org.example;
+package org.example.helperItems;
+
+import org.example.managers.MenuSerializer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,10 @@
-package org.example;
+package org.example.managers;
 
+import org.example.helperItems.FoodItem;
+import org.example.helperItems.Menu;
+import org.example.helperItems.Order;
+import org.example.helperItems.OrderItem;
+import org.example.mains.Customer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

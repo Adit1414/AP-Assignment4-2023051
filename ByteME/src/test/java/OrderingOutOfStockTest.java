@@ -1,6 +1,8 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.example.*;
+import org.example.helperItems.*;
+import org.example.mains.Customer;
+import org.example.managers.OrderManager;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

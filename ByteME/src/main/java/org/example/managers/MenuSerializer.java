@@ -1,5 +1,6 @@
-package org.example;
+package org.example.managers;
 
+import org.example.helperItems.FoodItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

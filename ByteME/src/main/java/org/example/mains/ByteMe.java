@@ -1,4 +1,9 @@
-package org.example;
+package org.example.mains;
+
+import org.example.helperItems.FoodItem;
+import org.example.helperItems.Menu;
+import org.example.managers.CustomerSerializer;
+import org.example.managers.OrderManager;
 
 import java.util.*;
 

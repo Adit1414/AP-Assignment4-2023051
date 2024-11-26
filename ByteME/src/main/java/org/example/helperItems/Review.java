@@ -1,4 +1,4 @@
-package org.example;
+package org.example.helperItems;
 
 public class Review {
     private final int rating;

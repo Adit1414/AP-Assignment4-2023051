@@ -1,10 +1,14 @@
-package org.example;
+package org.example.managers;
 
+import org.example.helperItems.FoodItem;
+import org.example.helperItems.Order;
+import org.example.helperItems.OrderItem;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
@@ -28,9 +32,6 @@ public class OrderManager {
         return pendingOrders;
     }
 
-    public ArrayList<Order> getCompletedOrders() {
-        return completedOrders;
-    }
     // Adds a new order to the pending orders list, with VIP orders prioritized
     public void addOrder(Order order) {
        for(OrderItem orderItem : order.getOrderItemList()){
@@ -71,8 +72,9 @@ public class OrderManager {
                 try {
                     // Read the existing content from the file
                     String existingContent = "";
-                    if (Files.exists(Paths.get("ByteME/data/pendingOrders.json"))) {
-                        existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/pendingOrders.json")));
+                    Path path = Paths.get("ByteME/data/pendingOrders.json");
+                    if (Files.exists(path)) {
+                        existingContent = new String(Files.readAllBytes(path));
                     }
 
                     // Parse the existing content as a JSONArray
@@ -92,7 +94,7 @@ public class OrderManager {
 
                     if (itemFound) {
                         // Write the updated JSON array back to the file
-                        Files.write(Paths.get("ByteME/data/pendingOrders.json"), jsonArray.toString(4).getBytes(),
+                        Files.write(path, jsonArray.toString(4).getBytes(),
                                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                         System.out.println(orderId + " status was updated to: " + status);
                     } else {
@@ -129,7 +131,6 @@ public class OrderManager {
             }
         }
     }
-
 
     // Generates a sales report with basic statistics
     public void generateSalesReport() {
@@ -177,10 +178,6 @@ public class OrderManager {
             }
         }
         return mostPopularItem;
-    }
-
-    public PriorityQueue<Order> getWaitingQueue() {
-        return this.waitingQueue;
     }
 
     public Order getOrderById(String orderId) {
@@ -282,8 +279,9 @@ public class OrderManager {
         try {
             // Read the existing content from the file
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/pendingOrders.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/pendingOrders.json")));
+            Path path = Paths.get("ByteME/data/pendingOrders.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray
@@ -303,7 +301,7 @@ public class OrderManager {
 
             if (itemFound) {
                 // Write the updated JSON array back to the file
-                Files.write(Paths.get("ByteME/data/pendingOrders.json"), jsonArray.toString(4).getBytes(),
+                Files.write(path, jsonArray.toString(4).getBytes(),
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println(orderId + " was removed.");
             } else {

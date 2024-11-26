@@ -1,6 +1,10 @@
-package org.example;
+package org.example.mains;
 
-import java.util.PriorityQueue;
+import org.example.helperItems.FoodItem;
+import org.example.helperItems.Menu;
+import org.example.helperItems.Order;
+import org.example.managers.OrderManager;
+
 import java.util.Scanner;
 
 public class Admin {

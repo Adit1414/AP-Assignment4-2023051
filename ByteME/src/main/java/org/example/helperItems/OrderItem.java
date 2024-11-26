@@ -1,4 +1,4 @@
-package org.example;
+package org.example.helperItems;
 
 import org.json.JSONObject;
 

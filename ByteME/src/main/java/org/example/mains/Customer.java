@@ -1,5 +1,9 @@
-package org.example;
+package org.example.mains;
 
+import org.example.helperItems.*;
+import org.example.managers.CustomerSerializer;
+import org.example.managers.OrderManager;
+import org.example.managers.PendingOrderSerializer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
