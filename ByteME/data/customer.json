@@ -6,36 +6,12 @@
         "name": "Customer",
         "email": "c",
         "isVIP": false,
-        "cart": [{
-            "item": {
-                "reviews": [],
-                "price": 30,
-                "rating": 0,
-                "available": true,
-                "name": "Alu Parantha",
-                "category": "North Indian"
-            },
-            "quantity": 4
-        }]
+        "cart": []
     },
     {
         "password": "c1pass",
-        "orders history": [{
-            "orderId": "d8fa6302",
-            "items": [{
-                "itemName": "Chowmein",
-                "quantity": 3
-            }],
-            "status": "Received"
-        }],
-        "current orders": [{
-            "orderId": "d8fa6302",
-            "items": [{
-                "itemName": "Chowmein",
-                "quantity": 3
-            }],
-            "status": "Received"
-        }],
+        "orders history": [],
+        "current orders": [],
         "name": "Customer1",
         "email": "c1@iiitd",
         "isVIP": false,

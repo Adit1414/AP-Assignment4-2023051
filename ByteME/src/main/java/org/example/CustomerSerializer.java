@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
@@ -35,8 +36,9 @@ public class CustomerSerializer {
         try {
             // Read the existing content from the file (if it exists)
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            Path path = Paths.get("ByteME/data/customer.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray, or create a new one if empty
@@ -47,7 +49,7 @@ public class CustomerSerializer {
             jsonArray.put(jsonItem);
 
             // Write the updated array back to the file
-            Files.write(Paths.get("ByteME/data/customer.json"), jsonArray.toString(4).getBytes(),
+            Files.write(path, jsonArray.toString(4).getBytes(),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         } catch (IOException e) {
@@ -60,8 +62,9 @@ public class CustomerSerializer {
         try {
             // Read the existing content from the file
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            Path path = Paths.get("ByteME/data/customer.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray
@@ -88,10 +91,6 @@ public class CustomerSerializer {
                     }
                     existingItem.put("orders history", ordersHistoryArray);
 
-
-//                    existingItem.put("current orders", this.currentOrders);
-//                    existingItem.put("orders history", this.ordersHistory);
-
                     itemFound = true;
                     break;
                 }
@@ -99,7 +98,7 @@ public class CustomerSerializer {
 
             if (itemFound) {
                 // Write the updated JSON array back to the file
-                Files.write(Paths.get("ByteME/data/customer.json"), jsonArray.toString(4).getBytes(),
+                Files.write(path, jsonArray.toString(4).getBytes(),
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println(customer.getName() + " data was updated");
             } else {
@@ -115,8 +114,9 @@ public class CustomerSerializer {
         try {
             // Read the existing content from the file
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            Path path = Paths.get("ByteME/data/customer.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray
@@ -201,8 +201,6 @@ public class CustomerSerializer {
         return orderList;
     }
 
-
-
     private static List<OrderItem> jsonToCart(JSONArray jsonArray) {
         List<OrderItem> orderItemList = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -264,59 +262,4 @@ public class CustomerSerializer {
         }
         return orderItemList;
     }
-
-
-//    public static Customer deserialize(Customer customer) {
-//        try {
-//            if (!Files.exists(Paths.get("ByteME/data/customer.json"))) {
-//                System.out.println("Customer file not found.");
-//                return customer;
-//            }
-//
-//            String content = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
-//            JSONArray jsonArray = new JSONArray(content);
-//
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject jsonItem = jsonArray.getJSONObject(i);
-//                if (jsonItem.getString("email").equalsIgnoreCase(customer.getEmail())) {
-//                    // Update the Customer's attributes
-////                    customer.setName(jsonItem.getString("name"));
-////                    customer.setPassword(jsonItem.getString("password"));
-//                    customer.setVIP(jsonItem.getBoolean("isVIP"));
-//
-//                    // Deserialize orders history
-//                    JSONArray historyArray = jsonItem.getJSONArray("orders history");
-//                    for (int j = 0; j < historyArray.length(); j++) {
-//                        Order order = Order.fromJson(historyArray.getJSONObject(j), customer);
-//                        customer.getOrdersHistory().add(order);
-//                    }
-//
-//                    // Deserialize current orders
-//                    JSONArray currentOrdersArray = jsonItem.getJSONArray("current orders");
-//                    for (int j = 0; j < currentOrdersArray.length(); j++) {
-//                        Order order = Order.fromJson(currentOrdersArray.getJSONObject(j), customer);
-//                        customer.getCurrentOrders().add(order);
-//                    }
-//
-//                    // Deserialize cart
-//                    JSONArray cartArray = jsonItem.getJSONArray("cart");
-//                    for (int j = 0; j < cartArray.length(); j++) {
-//                        OrderItem order = OrderItem.fromJsonCart(cartArray.getJSONObject(j));
-//                        customer.getCart().add(order);
-//                    }
-//
-//                    System.out.println("Attributes updated for customer: " + customer.getEmail());
-//                    return customer;
-//                }
-//            }
-//
-//            System.out.println("Customer not found: " + customer.getEmail());
-//        } catch (IOException e) {
-//            System.out.println("Error reading the customer file: " + e.getMessage());
-//        } catch (Exception e) {
-//            System.out.println("Error processing customer data: " + e.getMessage());
-//        }
-//        return customer;
-//    }
-
 }

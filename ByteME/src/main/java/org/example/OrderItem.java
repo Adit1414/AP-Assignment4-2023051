@@ -3,26 +3,12 @@ package org.example;
 import org.json.JSONObject;
 
 public class OrderItem {
-    private FoodItem item;
+    private final FoodItem item;
     private int quantity;
 
     public OrderItem(FoodItem item, int quantity){
         this.item = item;
         this.quantity = quantity;
-    }
-
-    public static OrderItem fromJson(JSONObject itemObject) {
-        String name = itemObject.getString("itemName");
-        FoodItem item = Menu.getInstance().searchItem(name);
-        int quantity = itemObject.getInt("quantity");
-        return new OrderItem(item, quantity);
-    }
-    public static OrderItem fromJsonCart(JSONObject itemObject) {
-        JSONObject foodItemObject = itemObject.getJSONObject("item");
-        String name = foodItemObject.getString("name");
-        FoodItem item = Menu.getInstance().searchItem(name);
-        int quantity = itemObject.getInt("quantity");
-        return new OrderItem(item, quantity);
     }
 
     public int calcItemTotal(){

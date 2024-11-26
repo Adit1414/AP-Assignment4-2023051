@@ -5,16 +5,16 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Customer{
-    private String name;
+    private final String name;
     private final String email;
-    private String password;
+    private final String password;
     private boolean isVIP;
     private List<Order> ordersHistory;
     private List<Order> currentOrders;
@@ -51,8 +51,9 @@ public class Customer{
         try {
             // Read the existing content from the file
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
+            Path path = Paths.get("ByteME/data/customer.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray

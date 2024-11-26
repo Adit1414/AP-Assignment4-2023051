@@ -28,30 +28,6 @@ public class Order {
         updateFoodItemList();
     }
 
-    public static Order fromJson(JSONObject jsonObject, Customer customer) {
-        String address = jsonObject.getString("address");
-
-        // Populate the order item list
-        List<OrderItem> orderItems = new ArrayList<>();
-        JSONArray orderItemsArray = jsonObject.getJSONArray("items");
-        for (int i = 0; i < orderItemsArray.length(); i++) {
-            JSONObject itemObject = orderItemsArray.getJSONObject(i);
-            OrderItem item = OrderItem.fromJson(itemObject);
-            orderItems.add(item);
-        }
-
-        Order order = new Order(customer, orderItems, address);
-        order.setOrderId(String.valueOf(jsonObject.getInt("orderId")));
-        order.setStatus(jsonObject.getString("status"));
-        order.setSpecialRequest(jsonObject.optString("special request", ""));
-
-        return order;
-    }
-
-    private void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public JSONObject toJson() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("orderId", orderId);

@@ -5,6 +5,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -30,8 +31,9 @@ public class PendingOrderSerializer {
         try {
             // Read the existing content from the file (if it exists)
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/pendingOrders.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/pendingOrders.json")));
+            Path path = Paths.get("ByteME/data/pendingOrders.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray, or create a new one if empty
@@ -42,7 +44,7 @@ public class PendingOrderSerializer {
             jsonArray.put(jsonItem);
 
             // Write the updated array back to the file
-            Files.write(Paths.get("ByteME/data/pendingOrders.json"), jsonArray.toString(4).getBytes(),
+            Files.write(path, jsonArray.toString(4).getBytes(),
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         } catch (IOException e) {

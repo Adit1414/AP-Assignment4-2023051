@@ -1,13 +1,6 @@
 package org.example;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ByteMe {
     private static final Scanner scanner = new Scanner(System.in);
@@ -25,8 +18,7 @@ public class ByteMe {
             System.out.println("\nWelcome to Byte Me!");
             System.out.println("1. Login as a customer");
             System.out.println("2. Login as an admin");
-            System.out.println("3. Sign up as a customer");
-            System.out.println("4. Exit");
+            System.out.println("3. Exit");
             System.out.print("\nEnter your choice: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -60,13 +52,9 @@ public class ByteMe {
                         adminMenu(admin);
                         break;
                     }
-
                     System.out.println("Email or password is incorrect.");
                     break;
                 case 3:
-                    signUp();
-                    break;
-                case 4:
                     exit = true;
                     System.out.println("\nExiting...");
                     break;
@@ -74,165 +62,6 @@ public class ByteMe {
                     System.out.println("\nInvalid choice. Please try again.");
             }
         }
-    }
-
-//    private static List<Order> jsonToOrderList(JSONObject customerJson, String key) {
-//        List<Order> orderList = new ArrayList<>();
-//
-//        // Extract the orders array for the given key (e.g., "orders history" or "current orders")
-//        JSONArray ordersJsonArray = customerJson.optJSONArray(key);
-//        if (ordersJsonArray == null) {
-//            System.out.println("Warning: Missing '" + key + "' field for customer: " + customerJson.optString("email"));
-//            return orderList;
-//        }
-//
-//        String customerEmail = customerJson.optString("email", null);
-//        if (customerEmail == null) {
-//            System.out.println("Error: Missing 'email' field in customer object.");
-//            return orderList;
-//        }
-//
-//        // Find the Customer object by email
-//        Customer customer = null;
-//        for (Customer c : customers) {
-//            if (c.getEmail().equals(customerEmail)) {
-//                customer = c;
-//                break;
-//            }
-//        }
-//        if (customer == null) {
-//            System.out.println("Error: No customer found with email: " + customerEmail);
-//            return orderList;
-//        }
-//
-//        // Parse the orders from the JSON array
-//        for (int i = 0; i < ordersJsonArray.length(); i++) {
-//            try {
-//                JSONObject orderJson = ordersJsonArray.getJSONObject(i);
-//
-//                JSONArray orderItemsJsonArray = orderJson.optJSONArray("items");
-//                if (orderItemsJsonArray == null) {
-//                    System.out.println("Warning: Missing 'items' in order at index " + i);
-//                    continue;
-//                }
-//                List<OrderItem> orderItemList = jsonToOrderItemList(orderItemsJsonArray);
-//
-//                String address = orderJson.optString("address", "Unknown Address");
-//                String orderId = orderJson.optString("orderId", UUID.randomUUID().toString().substring(0, 8));
-//                String status = orderJson.optString("status", "Pending");
-//                String specialRequest = orderJson.optString("specialRequest", "");
-//
-//                Order order = new Order(customer, orderItemList, address);
-//                order.setOrderId(orderId);
-//                order.setStatus(status);
-//                order.setSpecialRequest(specialRequest);
-//
-//                orderList.add(order);
-//            } catch (JSONException e) {
-//                System.out.println("Error processing order at index " + i + ": " + e.getMessage());
-//            }
-//        }
-//
-//        return orderList;
-//    }
-//
-//
-//
-//    private static List<OrderItem> jsonToCart(JSONArray jsonArray) {
-//        List<OrderItem> orderItemList = new ArrayList<>();
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            JSONObject orderItemJson = jsonArray.getJSONObject(i);
-//
-//            if(orderItemJson!=null) {
-//                // Extract details of OrderItem
-////                String foodName = orderItemJson.getString("item");
-//
-//                JSONObject foodItemJson = orderItemJson.getJSONObject("item");
-//                String name = foodItemJson.getString("name");
-//                FoodItem fi = menu.searchItem(name);
-//
-//                int quantity = orderItemJson.getInt("quantity");
-//
-//
-//                // Create a new OrderItem
-//                OrderItem orderItem = new OrderItem(fi, quantity);
-//
-//                orderItemList.add(orderItem);
-//            }
-//        }
-//        return orderItemList;
-//    }
-//
-//    private static List<OrderItem> jsonToOrderItemList(JSONArray jsonArray) {
-//        List<OrderItem> orderItemList = new ArrayList<>();
-//        for (int i = 0; i < jsonArray.length(); i++) {
-//            try {
-//                JSONObject orderItemJson = jsonArray.getJSONObject(i);
-//
-//                // Extract 'itemName' directly
-//                String name = orderItemJson.optString("itemName", null);
-//                if (name == null) {
-//                    System.out.println("Error: Missing 'itemName' in order item at index " + i);
-//                    continue; // Skip this item
-//                }
-//
-//                // Look up the FoodItem
-//                FoodItem fi = menu.searchItem(name);
-//                if (fi == null) {
-//                    System.out.println("Warning: Food item not found in menu for name: " + name);
-//                    continue; // Skip if the FoodItem is not in the menu
-//                }
-//
-//                // Extract the quantity
-//                int quantity = orderItemJson.optInt("quantity", 0);
-//                if (quantity <= 0) {
-//                    System.out.println("Warning: Invalid quantity for item: " + name);
-//                    continue; // Skip items with invalid quantity
-//                }
-//
-//                // Create and add the OrderItem
-//                OrderItem orderItem = new OrderItem(fi, quantity);
-//                orderItemList.add(orderItem);
-//            } catch (JSONException e) {
-//                System.out.println("Error processing order item at index " + i + ": " + e.getMessage());
-//            }
-//        }
-//        return orderItemList;
-//    }
-//
-//    private static void addCustomerData(Customer customer) {
-//        try {
-//            // Read the existing content from the file
-//            String existingContent = "";
-//            if (Files.exists(Paths.get("ByteME/data/customer.json"))) {
-//                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/customer.json")));
-//            }
-//
-//            // Parse the existing content as a JSONArray
-//            JSONArray jsonArray = existingContent.isEmpty() ? new JSONArray() : new JSONArray(existingContent);
-//
-//            // Check if the customer already exists in the JSON array
-//            for (int i = 0; i < jsonArray.length(); i++) {
-//                JSONObject existingItem = jsonArray.getJSONObject(i);
-//
-//                if (existingItem.getString("email").equals(customer.getEmail())) {
-//                    // Populate customer's data from the JSON object
-//                    customer.setOrdersHistory(jsonToOrderList(existingItem, "orders history"));
-//                    customer.setCurrentOrders(jsonToOrderList(existingItem, "current orders"));
-//                    customer.setVIP(existingItem.getBoolean("isVIP"));
-//                    customer.setCart(jsonToCart(existingItem.getJSONArray("cart")));
-//
-//                    return; // Customer data populated successfully
-//                }
-//            }
-//        } catch (IOException e) {
-//            System.out.println("Error reading the JSON file: " + e.getMessage());
-//        }
-//    }
-
-
-    private static void signUp(){
-        //Sign up functionalities
     }
 
     public static void customerMenu(Customer customer) {

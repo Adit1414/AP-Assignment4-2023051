@@ -77,37 +77,13 @@ public class Menu {
         return false; // Item does not exist
     }
 
-
-//    public boolean removeItem(String name){
-//        boolean itemFound = false;
-//        for(List<FoodItem> foodList : this.items.values()){
-//            for (int i = 0; i < foodList.size(); i++){
-//                FoodItem food = foodList.get(i);
-//                if (food.getName().equalsIgnoreCase(name)){
-//                    foodList.remove(i);
-//                    itemFound=true;
-//                    break;
-//                }
-//            }
-//            if (itemFound) {
-//                break;  // Stop searching once the item has been found and updated
-//            }
-//        }
-//        if (!itemFound) {
-//            System.out.println(name + " not found in the menu.");
-//        }
-//        else {
-//            System.out.println(name + " was removed.");
-//        }
-//        return itemFound;
-//    }
-
     public boolean removeItem(String name) {
         try {
             // Read the existing content from the file
             String existingContent = "";
-            if (Files.exists(Paths.get("ByteME/data/menu.json"))) {
-                existingContent = new String(Files.readAllBytes(Paths.get("ByteME/data/menu.json")));
+            Path path = Paths.get("ByteME/data/menu.json");
+            if (Files.exists(path)) {
+                existingContent = new String(Files.readAllBytes(path));
             }
 
             // Parse the existing content as a JSONArray
@@ -127,7 +103,7 @@ public class Menu {
 
             if (itemFound) {
                 // Write the updated JSON array back to the file
-                Files.write(Paths.get("ByteME/data/menu.json"), jsonArray.toString(4).getBytes(),
+                Files.write(path, jsonArray.toString(4).getBytes(),
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println(name + " was removed.");
             } else {
