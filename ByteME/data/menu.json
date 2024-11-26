@@ -2,7 +2,7 @@
     {
         "price": 40,
         "name": "Chowmein",
-        "available": true,
+        "available": false,
         "rating": 0,
         "category": "Chinese"
     },
@@ -44,7 +44,7 @@
     {
         "price": 30,
         "name": "Alu Parantha",
-        "available": true,
+        "available": false,
         "rating": 0,
         "category": "North Indian"
     },

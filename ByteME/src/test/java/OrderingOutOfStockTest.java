@@ -11,13 +11,15 @@ import java.util.List;
 class OrderingOutOfStockTest {
     private Menu menu;
     private Cart cart;
-    private OrderManager orderManager = new OrderManager();
-    private Customer customer = new Customer("Tester", "t", "t");
+    private OrderManager orderManager;
+    private Customer customer;
 
     @BeforeEach
     void setUp() {
         menu = Menu.getInstance();
         cart = new Cart();
+        orderManager = new OrderManager();
+        customer = new Customer("Tester", "t", "t");
         // Add an item to the menu and mark it as out of stock
         FoodItem item = new FoodItem("IceCream", 35, "Snacks");
         item.setAvailable(false);

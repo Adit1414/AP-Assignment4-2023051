@@ -391,7 +391,7 @@ public class ByteMe {
             switch (choice) {
                 //View all items
                 case "1a":
-//                    customer.viewAllItems();
+                    customer.viewAllItems();
                     GuiApp.viewGUI(); // Prototype
                     break;
                 //Search for an item

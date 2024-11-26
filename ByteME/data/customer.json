@@ -6,7 +6,17 @@
         "name": "Customer",
         "email": "c",
         "isVIP": false,
-        "cart": []
+        "cart": [{
+            "item": {
+                "reviews": [],
+                "price": 30,
+                "rating": 0,
+                "available": true,
+                "name": "Alu Parantha",
+                "category": "North Indian"
+            },
+            "quantity": 4
+        }]
     },
     {
         "password": "c1pass",

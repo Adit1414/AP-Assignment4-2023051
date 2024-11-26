@@ -45,7 +45,7 @@ public class MenuSerializer {
                     StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
         } catch (IOException e) {
-            System.out.println("Error writing to JSON file: " + e.getMessage());
+//            System.out.println("Error writing to JSON file: " + e.getMessage());
         }
     }
 //    public static void updateJsonData(FoodItem item) {
@@ -125,7 +125,7 @@ public class MenuSerializer {
     public static FoodItem deserialize(FoodItem foodItem) {
         try {
             if (!Files.exists(Paths.get("ByteME/data/menu.json"))) {
-                System.out.println("Menu file not found.");
+//                System.out.println("Menu file not found.");
                 return foodItem;
             }
 
@@ -147,7 +147,7 @@ public class MenuSerializer {
 
             System.out.println("Food item not found in menu: " + foodItem.getName());
         } catch (IOException e) {
-            System.out.println("Error reading the menu file: " + e.getMessage());
+//            System.out.println("Error reading the menu file: " + e.getMessage());
         }
         return foodItem;
     }
@@ -156,7 +156,7 @@ public class MenuSerializer {
     public static void updateJsonData(FoodItem item) {
         try {
             if (!Files.exists(Paths.get("ByteME/data/menu.json"))) {
-                System.out.println("Menu file not found.");
+//                System.out.println("Menu file not found.");
                 return;
             }
 
@@ -185,7 +185,7 @@ public class MenuSerializer {
             System.out.println("JSON data updated for food item: " + item.getName());
 
         } catch (IOException e) {
-            System.out.println("Error writing to JSON file: " + e.getMessage());
+//            System.out.println("Error writing to JSON file: " + e.getMessage());
         }
     }
 }
