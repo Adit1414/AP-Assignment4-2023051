@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
-    private final Customer customer;
+    private Customer customer;
     private final List<OrderItem> orderItemList;
     private final List<FoodItem> foodItemList;
     private String orderId;
     private String status;
     private String specialRequest;
     private int totalPrice;
-    private final String address;
+    private String address;
 
     public Order(Customer customer, List<OrderItem> orderItemList, String address){
         this.customer=customer;
@@ -26,6 +26,30 @@ public class Order {
         this.address = address;
         foodItemList = new ArrayList<>();
         updateFoodItemList();
+    }
+
+    public static Order fromJson(JSONObject jsonObject, Customer customer) {
+        String address = jsonObject.getString("address");
+
+        // Populate the order item list
+        List<OrderItem> orderItems = new ArrayList<>();
+        JSONArray orderItemsArray = jsonObject.getJSONArray("items");
+        for (int i = 0; i < orderItemsArray.length(); i++) {
+            JSONObject itemObject = orderItemsArray.getJSONObject(i);
+            OrderItem item = OrderItem.fromJson(itemObject);
+            orderItems.add(item);
+        }
+
+        Order order = new Order(customer, orderItems, address);
+        order.setOrderId(String.valueOf(jsonObject.getInt("orderId")));
+        order.setStatus(jsonObject.getString("status"));
+        order.setSpecialRequest(jsonObject.optString("special request", ""));
+
+        return order;
+    }
+
+    private void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public JSONObject toJson() {
@@ -106,6 +130,10 @@ public class Order {
 
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
     }
 
     public void setOrderId(String orderId) {

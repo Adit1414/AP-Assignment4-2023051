@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Customer{
-    private final String name;
+    private String name;
     private final String email;
-    private final String password;
+    private String password;
     private boolean isVIP;
     private List<Order> ordersHistory;
     private List<Order> currentOrders;

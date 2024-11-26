@@ -146,6 +146,7 @@ public class Menu {
         for(List<FoodItem> foodList : this.items.values()){
             for (FoodItem food : foodList) {
                 if (food.getName().equalsIgnoreCase(name)) {
+                    MenuSerializer.deserialize(food);
                     return food;
                 }
             }
