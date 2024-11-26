@@ -23,6 +23,20 @@ public class Cart {
         return totalPrice;
     }
 
+    public void setOrdersList(List<OrderItem> cart) {
+        this.orderList=cart;
+        updateTotal();
+    }
+
+    public int getItemQuantity(FoodItem item) {
+        for(OrderItem orderItem : orderList){
+            if(orderItem.getItem().equals(item)){
+                return orderItem.getQuantity();
+            }
+        }
+        return 0;
+    }
+
     public void viewCart() {
         if(orderList.isEmpty()){
             System.out.println("Cart is empty.");
@@ -67,11 +81,6 @@ public class Cart {
         totalPrice=0;
     }
 
-    public void setOrdersList(List<OrderItem> cart) {
-        this.orderList=cart;
-        updateTotal();
-    }
-
     public void updateItemQuantity(OrderItem orderItem, int quantity) {
         if (quantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative.");
@@ -80,14 +89,5 @@ public class Cart {
         updateTotal();
         System.out.println(quantity + " " + orderItem.getItem().getName() + " added to cart.");
         System.out.println("Now there are " + orderItem.getQuantity() + " " + orderItem.getItem().getName() + " in cart.");
-    }
-
-    public int getItemQuantity(FoodItem item) {
-        for(OrderItem orderItem : orderList){
-            if(orderItem.getItem().equals(item)){
-                return orderItem.getQuantity();
-            }
-        }
-        return 0;
     }
 }

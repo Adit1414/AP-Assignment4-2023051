@@ -57,7 +57,7 @@ public class ByteMe {
                         adminMenu(admin);
                         break;
                     }
-                    System.out.println("Email or password is incorrect.");
+                    System.out.println("Password is incorrect.");
                     break;
                 case 3:
                     exit = true;
@@ -104,7 +104,7 @@ public class ByteMe {
                 //View all items
                 case "1a":
                     customer.viewAllItems();
-                    GuiApp.viewGUI(); // Prototype
+                    GuiApp.viewGUI();
                     break;
                 //Search for an item
                 case "1b":
@@ -206,7 +206,7 @@ public class ByteMe {
             String choice = scanner.nextLine().toLowerCase(Locale.ROOT);
             switch (choice) {
                 case "1a":
-//                    admin.viewAllItems();
+                    admin.viewAllItems();
                     GuiApp.viewGUI();
                     break;
                 case "1b":

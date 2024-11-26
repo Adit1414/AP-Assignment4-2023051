@@ -55,6 +55,10 @@ public class FoodItem {
         return rating;
     }
 
+    public void setRating(float rating) {
+        this.rating=rating;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
@@ -77,9 +81,5 @@ public class FoodItem {
                 "\nPrice: " + String.valueOf(this.price) +
                 "\nIs Available: " + String.valueOf(this.isAvailable) +
                 "\nCategory: " + this.category;
-    }
-
-    public void setRating(float rating) {
-        this.rating=rating;
     }
 }

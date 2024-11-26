@@ -107,6 +107,22 @@ public class Customer{
         return currentOrders;
     }
 
+    public List<OrderItem> getCart() {
+        return cart.getOrderList();
+    }
+
+    public void setOrdersHistory(List<Order> ordersHistory) {
+        this.ordersHistory=ordersHistory;
+    }
+
+    public void setCurrentOrders(List<Order> currentOrders) {
+        this.currentOrders=currentOrders;
+    }
+
+    public void setCart(List<OrderItem> cart) {
+        this.cart.setOrdersList(cart);
+    }
+
     //Menu Operations
     public void viewAllItems(){
         menu.viewAllItems();
@@ -470,21 +486,5 @@ public class Customer{
             ordersHistory.add(order);
             CustomerSerializer.updateJsonData(this);
         }
-    }
-
-    public List<OrderItem> getCart() {
-        return cart.getOrderList();
-    }
-
-    public void setOrdersHistory(List<Order> ordersHistory) {
-        this.ordersHistory=ordersHistory;
-    }
-
-    public void setCurrentOrders(List<Order> currentOrders) {
-        this.currentOrders=currentOrders;
-    }
-
-    public void setCart(List<OrderItem> cart) {
-        this.cart.setOrdersList(cart);
     }
 }

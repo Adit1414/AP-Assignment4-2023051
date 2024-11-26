@@ -72,12 +72,6 @@ public class Order {
         return customer;
     }
 
-    private void calculateTotalPrice(){
-        for (OrderItem orderItem : orderItemList){
-            totalPrice+=orderItem.calcItemTotal();
-        }
-    }
-
     public int getTotalPrice(){
         return totalPrice;
     }
@@ -90,6 +84,24 @@ public class Order {
         this.specialRequest = specialRequest;
     }
 
+    public String getSpecialRequest() {
+        return specialRequest;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId=orderId;
+    }
+
+    private void calculateTotalPrice(){
+        for (OrderItem orderItem : orderItemList){
+            totalPrice+=orderItem.calcItemTotal();
+        }
+    }
+
     public String toString(){
         return "Items: " + orderItemList +
                 "\nTotal Price: " + totalPrice +
@@ -99,21 +111,5 @@ public class Order {
                 "\nIs VIP: " + isVip() +
                 "\nAddress: " + address +
                 "\n";
-    }
-
-    public String getSpecialRequest() {
-        return specialRequest;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address){
-        this.address = address;
-    }
-
-    public void setOrderId(String orderId) {
-        this.orderId=orderId;
     }
 }
