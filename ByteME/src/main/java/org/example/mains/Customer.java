@@ -297,9 +297,10 @@ public class Customer{
                     currentOrders.remove(order);
                     orderManager.getPendingOrders().remove(order);
                     order.setStatus("Cancelled");
-                    System.out.println("Order canceled successfully: " + order.getOrderItemList());
                     ordersHistory.add(order);
                     CustomerSerializer.updateJsonData(this);
+                    OrderManager.removeOrder(orderID);
+                    System.out.println("Order canceled successfully: " + order.getOrderItemList());
                 }
                 else {
                     System.out.println("Cannot cancel order");
@@ -322,6 +323,7 @@ public class Customer{
 
         System.out.println("Do you want to order anything from your past orders? (Y/N)");
         String confirmation = scanner.nextLine();
+
 
         if(confirmation.equalsIgnoreCase("Y")){
             boolean found = false;
@@ -364,18 +366,27 @@ public class Customer{
         System.out.println("Do you want to proceed with the order? (Y/N): ");
         String confirmation = scanner.nextLine();
 
-        if (confirmation.equalsIgnoreCase("Y")) {
-            Order order = new Order(this, orderList, address);
-            order.setSpecialRequest(request);
-            orderManager.addOrder(order);
-            currentOrders.add(order);
-            System.out.println("Checkout successful! Thank you for your order.");
+        try {
+            if (confirmation.equalsIgnoreCase("Y")) {
+                Order order = new Order(this, orderList, address);
+                order.setSpecialRequest(request);
+                orderManager.addOrder(order);
+                currentOrders.add(order);
+                PendingOrderSerializer.saveToFile(order);
+                CustomerSerializer.updateJsonData(this);
+                System.out.println("Checkout successful! Thank you for your order.");
+                if (order.isVip()) {
+                    orderManager.handleStatus(order, "Accepted");
+                }
+            } else if (confirmation.equalsIgnoreCase("N")) {
+                System.out.println("Checkout cancelled. You can continue shopping.");
+            } else {
+                System.out.println("Enter Y or N. Checkout cancelled.");
+            }
         }
-        else if(confirmation.equalsIgnoreCase("N")){
-            System.out.println("Checkout cancelled. You can continue shopping.");
-        }
-        else {
-            System.out.println("Enter Y or N. Checkout cancelled.");
+        catch (IllegalArgumentException e) {
+            // Handle the exception
+            System.out.println(e.getMessage());
         }
     }
 

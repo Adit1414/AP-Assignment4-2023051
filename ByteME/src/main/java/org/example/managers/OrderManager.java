@@ -282,7 +282,7 @@ public class OrderManager {
         deliveryThread.start();
     }
 
-    public void removeOrder(String orderId) {
+    public static void removeOrder(String orderId) {
         try {
             // Read the existing content from the file
             String existingContent = "";
@@ -311,9 +311,10 @@ public class OrderManager {
                 Files.write(path, jsonArray.toString(4).getBytes(),
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 System.out.println(orderId + " was removed.");
-            } else {
-                System.out.println(orderId + " not found in pending orders.");
             }
+//            else {
+//                System.out.println(orderId + " not found in pending orders.");
+//            }
 
         } catch (IOException e) {
             System.out.println("Error reading or writing to JSON file: " + e.getMessage());

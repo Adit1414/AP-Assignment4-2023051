@@ -3,6 +3,7 @@ package org.example.mains;
 import org.example.helperItems.FoodItem;
 import org.example.helperItems.Menu;
 import org.example.helperItems.Order;
+import org.example.managers.MenuSerializer;
 import org.example.managers.OrderManager;
 
 import java.util.Scanner;
@@ -74,6 +75,7 @@ public class Admin {
         if (!category.isEmpty()) {
             item.setCategory(category);
         }
+        MenuSerializer.updateJsonData(item);
         System.out.println("Item updated successfully!");
     }
 
@@ -83,8 +85,8 @@ public class Admin {
         FoodItem item = menu.searchItem(name);
         if (menu.removeItem(item.getName())) {
             orderManager.updatePendingOrdersStatus(item);
-            System.out.println("Pending orders updated.");
             orderManager.removeFromPendingOrders(item);
+            System.out.println("Pending orders updated.");
         }
     }
 
